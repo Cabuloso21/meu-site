@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Email e Senha</title>
+</head>
+<body>
+  
+ <style>
+  
+ body {
+ margin: 0;
+ font-family: Arial, sans-serif
+
+ }
+
+ header {
+ background: orange;
+ padding: 20px; 
+ text-align: center;
+ 
+ }
+
+
+ .container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ background: white;
+ text-align: center;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ margin-left: 30px;
+ margin-right: 30px;
+ margin-top: 30px;
+
+}
+
+  
+
+  .text {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+
+ .title {
+ color: black;
+ font-size: 16.50px;
+ font-weight: none;
+ text-align: center;
+ margin-top: 20px;
+ margin-left: 10px;
+ margin-right: 10px;
+ line-height: 1.4;
+ font-style: italic;
+
+ }
+
+  .cadastrar, .senha {
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 30px;
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1.5px solid #ccc;
+    margin: 10px;
+   display: flex;
+
+ }
+
+  button {
+    background: orange;
+    border-radius: 10px;
+    border: 1px solid orange;
+    padding: 10px; 
+    margin-top: 10px;
+    font-weight: bold;
+
+}
+
+</style>  
+  
+  
+  </head>
+<body>
+  <header>
+    <div class="text">Criar senha de acesso</div>
+  </header>
+ 
+  
+<div class="title">Lembre-se dessa senha, pois ela será usada para que você possa acessar sua página de administrador. Se você esquecer dela, não será possível recuperá-la.</div>
+  </div>
+</div>
+  
+<div class="container">
+ <input type="email" id="email" placeholder="Digite seu email">
+ <input type="password" id="newPassword" placeholder="Digite sua nova senha">
+ <button onclick="register()">Cadastrar</button>
+
+<p id="message"></p>
+
+       <script>
+        function register() {
+            var emailInput = document.getElementById("email");
+            var newPasswordInput = document.getElementById("newPassword");
+            var message = document.getElementById("message");
+
+            var email = emailInput.value;
+            var newPassword = newPasswordInput.value;
+
+            if (localStorage.getItem("emailRegistered")) {
+                message.textContent = "Um email já foi cadastrado neste dispositivo.";
+                return;
+            }
+
+            if (email && newPassword) {
+                var users = JSON.parse(localStorage.getItem("users")) || {};
+
+                if (users[email]) {
+                    message.textContent = "Este email já está cadastrado.";
+                } else {
+                    users[email] = newPassword;
+                    localStorage.setItem("users", JSON.stringify(users));
+                    localStorage.setItem("emailRegistered", true); // Marcar que um email foi cadastrado
+                    message.textContent = "Email e senha cadastrados com sucesso.";
+
+                    // Limpar campos de input
+                    emailInput.value = "";
+                    newPasswordInput.value = "";
+
+                    // Armazenar dados permanentemente no localStorage
+                    localStorage.setItem("cadastroEmail", email);
+                    localStorage.setItem("cadastroSenha", newPassword);
+
+                    // Exibir mensagem de confirmação com link para a página de login
+                    var confirmacaoMessage = document.createElement("p");
+                    confirmacaoMessage.textContent = "Cadastro realizado com sucesso! Clique ";
+                    var loginLink = document.createElement("a");
+                    loginLink.href = "prataforma.html";
+                    loginLink.textContent = "aqui";
+                    confirmacaoMessage.appendChild(loginLink);
+                    confirmacaoMessage.innerHTML += " para fazer login.";
+                    document.body.appendChild(confirmacaoMessage);
+                }
+            } else {
+                message.textContent = "O email e a senha não podem estar em branco.";
+            }
+        }
+    </script>
+</body>
+</html>

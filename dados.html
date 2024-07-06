@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dados Recebidos</title>
+</head>
+<body>
+  
+<style>
+       
+ body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+       
+ }
+
+ header {
+ background: orange;
+ padding: 20px; 
+    
+ }
+
+ .logo {
+ color: black;
+ font-size: 25px;
+ font-weight: bold;
+ text-align: absolute;
+ margin-left: 0px;
+ margin-right: 0px;
+     
+}   
+        
+ #dados {
+ background-color: white;
+ padding: 20px;
+ border: 1px solid #ddd;
+ border-radius: 5px;
+ max-width: 400px;
+ margin-top: 20px;
+ margin-left: 10px;
+ margin-right: 10px;
+
+}
+       
+ 
+#dados p {
+ font-size: 17px;
+ margin: 10px 0;
+        
+}
+        
+ #dados p span {
+ font-size: 16px;
+ color: black;
+ 
+}
+       
+ #email-label {
+ color: blue;
+ font-weight: bold;
+        
+}
+  
+ #senha-label {
+ color: red;
+ font-style: italic;
+        
+}
+
+
+
+
+ .container {
+ display: flex;
+ flex-direction: column;
+ justify-content: absolute;
+ align-items: center;
+ background: white;
+ text-align: center;
+ border-radius: 10px;
+ margin-left: 0px;
+ margin-right: 0px;
+ margin-top: 20px;
+
+}
+
+ .text {
+ color: black;
+ font-size: 20px;
+ font-weight: bold;
+ margin-top: 30px;
+ text-align: center;
+
+ }
+
+ .cadastrar, .senha {
+ color: black;
+ font-size: 16px;
+ font-weight: bold;
+ margin-top: 30px;
+    
+}
+
+ input {
+ padding: 10px;
+ border-radius: 5px;
+ border: 1.5px solid #ccc;
+ margin: 10px 0;
+ margin-top: 0px;
+
+}
+
+ button {
+ background: orange;
+ border-radius: 10px;
+ border: 1px solid orange;
+ padding: 10px; 
+ margin-top: 10px;
+  
+}
+
+</style>
+
+
+
+
+ <header>
+ <div class="logo">Lopixe</div>
+ </header> 
+ </div>
+ </div>
+ 
+ <div class="text">Meus dados</div>
+ </div>
+ </div>
+
+ <div id="dados">
+ <p>Email: <span id="email"></span></p>
+ <p>Senha: <span id="senha"></span></p>
+ </div>
+ </div>
+
+ <div class="text">Trocar email e senha</div>
+ </div>
+ </div>
+  
+ <div class="container">
+ <input type="email" id="newEmail" placeholder="Digite seu novo email">
+ <input type="password" id="newPassword" placeholder="Digite sua nova senha">
+ <button onclick="updateUser()">Atualizar</button>
+
+ <p id="updateMessage"></p>
+
+    <script>
+        // Função para carregar os dados do localStorage e exibir na página
+        function loadUserData() {
+            var email = localStorage.getItem("cadastroEmail");
+            var senha = localStorage.getItem("cadastroSenha");
+
+            // Exibir os dados na página
+            document.getElementById('email').textContent = email || 'N/A';
+            document.getElementById('senha').textContent = senha || 'N/A';
+        }
+
+        // Função para atualizar o email e a senha
+        function updateUser() {
+            var newEmailInput = document.getElementById("newEmail");
+            var newPasswordInput = document.getElementById("newPassword");
+            var updateMessage = document.getElementById("updateMessage");
+
+            var newEmail = newEmailInput.value;
+            var newPassword = newPasswordInput.value;
+
+            if (newEmail && newPassword) {
+                var users = JSON.parse(localStorage.getItem("users")) || {};
+
+                // Atualizar o localStorage
+                delete users[localStorage.getItem("cadastroEmail")]; // Remover o antigo email
+                users[newEmail] = newPassword; // Adicionar o novo email e senha
+                localStorage.setItem("users", JSON.stringify(users));
+
+                // Atualizar o email e senha no localStorage
+                localStorage.setItem("cadastroEmail", newEmail);
+                localStorage.setItem("cadastroSenha", newPassword);
+
+                // Atualizar os dados exibidos na página
+                loadUserData();
+
+                // Limpar campos de input
+                newEmailInput.value = "";
+                newPasswordInput.value = "";
+
+                updateMessage.textContent = "Email e senha atualizados com sucesso.";
+            } else {
+                updateMessage.textContent = "O novo email e a nova senha não podem estar em branco.";
+            }
+        }
+
+        // Chamar a função ao carregar a página
+        window.onload = loadUserData;
+    </script>
+</body>
+</html>
