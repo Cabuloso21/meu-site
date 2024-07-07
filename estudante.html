@@ -1,242 +1,183 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exemplo de Grid Flexível</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
- 
+<title>Gerenciamento de Categorias</title>
 <style>
- 
- body {
- font-family: Arial, sans-serif;
- margin: 0;
- background-color: white;
-   
-}
+  /* Estilos básicos para garantir a exibição dos elementos */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: lime;
+    
+  }
+
   
-.arrow {
- display: inline-block;
- width: 10px;
- height: 10px;
- border-top: 2px solid black;
- border-right: 2px solid black;
- transform: rotate(-130deg);
- position: absolute;
- top: 25px;
- left: 15px;
-}
-
- header {
- background-color: #cc1;
- padding: 20px;
- 
-}   
-
- .logo {
- margin-top: 0px;
- font-size: 22px;
- font-weight: bold;
- color: black;
- text-align: absolute;    
- margin-left: 20px;
-
-}
-
- #addCategory {
- background-color: #cc2;
- color: black;
- padding: 12px 20px;
- border: none;
- border-radius: 10px;
- cursor: pointer;
- margin-left: 15px;
- margin-top: 5px;
- font-size: 15px;
- font-weight: bold;
-      
-}
   
- #addCategory:hover {
- background-color: #cc2;
-      
-}
-
- #searchCategory {
- padding: 12px;
- margin-left: 10px;
- border: 1px solid #ccc;
- border-radius: 4px;
-   
-}
-
- #categoriesContainer > div {
- border: 1px solid #ccc;
- border-radius: 5px;
- position: center;
- flex-wrap: wrap;
- margin-left: 10px;
- margin-right: 10px;
- margin-top: 20px;
- background: white;
- border-radius: 5px;
- box-shadow:  0 2px 10px rgba(0, 0, 0, 0.2);
-   
-}
   
- #categoriesContainer > div h3 {
- font-size: 22px;
- margin-left: 10px;
- margin-top: 10px;
- color: black;
- border-bottom: none px solid #cc1;
   
-}
+  .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: lime;
+    padding: 40px;
+    border: 1px solid #ccc;
+    z-index: 999;
+  }
 
- input[type="number"] {
- width: 40%;
- margin-top: 1px;
- padding: 10px;
- border: 1px solid #ccc;
- border-radius: 4px;
- margin-bottom: 35px;
- margin-left: 10px;
-        
-}
+  .modal input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: calc(100% - 22px);
+  }
 
- label {
- margin-left: 10px;
- color: black;
- font-size: 17px;
- font-weight: bold;
-  
-}
-  
- #categoriesContainer> div input[type="text"] {
- padding: 10px;
- width: 300px;
- margin-left: 10px;
- border: none;
- border-radius: none;
- font-size: 16px;
- border-bottom: 1.50px solid #ccc;
- margin-bottom: 30px;
-   
-} 
-  
+  .modal button {
+    padding: 10px 20px;
+    margin-top: 10px;
+  }
 
-.delete-button {
- color: #f00;
- cursor: pointer;
- font-size: 15px;
- font-weight: bold;
- margin-left: 10px;
-      
-}
-
-.delete-button:hover {
- text-decoration: underline;
-  
-}
-
- button {
- background-color: #cc2;
- color: black;
- padding: 10px 10px;
- border: none;
- border-radius: 50px;
- cursor: pointer;
- margin-left: 180px;
- font-size: 15px;
- font-weight: bold;
- margin-bottom: 10px;
-      
-}
-
- button:hover {
- background-color: none;
-   
-}
-
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998; /* Z-index menor que o modal para ficar atrás dele */
+  }
 </style>
 </head>
 <body>
-
-<a href="admi.html">
-  <span class="arrow"></span>
-</a>
-
-<header>
-  <div class="logo">Meus estudantes</div>
-</header>
-
-<script defer src="estudante.js"></script>
-
 <button id="addCategory">Adicionar</button>
-<input type="text" id="searchCategory" placeholder="Pesquisar estudante" oninput="searchCategories()">
+<input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
 
-<div id="categoriesContainer"></div>
+<div id="categoriesContainer">
+  <p id="emptyMessage">Não há nada aqui</p>
+</div>
+
+ <div class="alert" id="whatsappAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Para conversar, adicione o número do WhatsApp.</div>
+</div>
+  
+  
+
+<div class="alert" id="customAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Categoria não existe</div>
+
+<div class="modal" id="addCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
+  <h2>Adicionar Categoria</h2>
+  <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
+  <button onclick="confirmAddCategory()" style="padding: 10px 20px; margin-top: 10px;">Adicionar</button>
+  <button onclick="closeCategoryModal()" style="padding: 10px 20px; margin-top: 10px;">Cancelar</button>
+</div>
+
+<div class="modal" id="deleteCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
+  <p>Deseja excluir esta categoria?</p>
+  <button onclick="confirmDelete()">Sim</button>
+  <button onclick="closeDeleteCategoryModal()">Não</button>
+</div>
 
 <script>
+// Função para obter a chave da página
+function pageKey() {
+  return 'pagina1';
+}
+
+// Use uma chave específica para esta página
+const storageKey = `categories_${pageKey()}`;
+
 const addButton = document.getElementById('addCategory');
 const searchInput = document.getElementById('searchCategory');
 const categoriesContainer = document.getElementById('categoriesContainer');
+const emptyMessage = document.getElementById('emptyMessage');
+const customAlert = document.getElementById('customAlert');
+const addCategoryModal = document.getElementById('addCategoryModal');
+const categoryNameInput = document.getElementById('categoryNameInput');
+
+const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+let categoryToDelete = null; // Armazena a categoria a ser excluída
 
 // Carregar categorias do localStorage ao carregar a página
 window.addEventListener('load', loadCategories);
 
-addButton.addEventListener('click', showCategoryMessage);
+addButton.addEventListener('click', showCategoryModal);
 
 function loadCategories() {
-  const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
-  categoriesContainer.innerHTML = ''; // Limpa o container
+  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+  categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
   savedCategories.forEach((categoryData) => {
     createCategory(categoryData);
   });
-  checkCategories();
+  checkEmptyCategories();
 }
 
-function showCategoryMessage() {
-  const categoryName = prompt("Nome do Estudante:");
+function showCategoryModal() {
+  addCategoryModal.style.display = 'block';
+  categoryNameInput.focus();
+}
+
+function closeCategoryModal() {
+  addCategoryModal.style.display = 'none';
+}
+
+function confirmAddCategory() {
+  const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
   if (categoryName) {
     const categoryData = {
       name: categoryName,
-      livro: "",
-      tema: "",
-      capitulo: "",
+      description: "Contato",
+      nome: "",
+      publicacões: "",
+      conversa: "",
       proximoEstudo: "",
       dia: "",
       horario: "",
-      phoneNumber: "",
+      endereco: "",
+      casa: "",
+      phoneNumber: ""
     };
+
     createCategory(categoryData);
     saveCategories();
-    checkCategories(); // Verifica se há categorias após adicionar
+    closeCategoryModal();
+    categoryNameInput.value = '';
   }
 }
 
 function createCategory(categoryData) {
+  // Remove a mensagem "Não há nada aqui" se existir
+  if (emptyMessage) {
+    emptyMessage.style.display = 'none';
+  }
+
   const categoryDiv = document.createElement('div');
   categoryDiv.innerHTML = `
     <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
+    <p contenteditable="true" oninput="saveCategories()">${categoryData.description}</p>
     <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
+    <!-- Resto do seu código HTML aqui -->
     <div>
-      <label for="livro">Livro de estudo:</label>
-      <input type="text" id="livro" value="${categoryData.livro}" oninput="updateCategoryField('${categoryData.name}', 'livro', this.value)">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" value="${categoryData.nome}" oninput="updateCategoryField('${categoryData.name}', 'nome', this.value)">
     </div>
     <div>
-      <label for="tema">Capítulo:</label>
-      <input type="text" id="tema" value="${categoryData.tema}" oninput="updateCategoryField('${categoryData.name}', 'tema', this.value)">
+      <label for="publicacões">Publicações:</label>
+      <input type="text" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.name}', 'publicacões', this.value)">
     </div>
     <div>
-      <label for="capitulo">Lição:</label>
-      <input type="text" id="capitulo" value="${categoryData.capitulo}" oninput="updateCategoryField('${categoryData.name}', 'capitulo', this.value)">
+      <label for="conversa">Primeira conversa:</label>
+      <input type="text" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.name}', 'conversa', this.value)">
     </div>
     <div>
-      <label for="proximoEstudo">Próximo estudo:</label>
+      <label for="proximoEstudo">Proxima conversa:</label>
       <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.name}', 'proximoEstudo', this.value)">
     </div>
     <div>
@@ -244,69 +185,107 @@ function createCategory(categoryData) {
       <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.name}', 'dia', this.value)">
     </div>
     <div>
-      <label for="horario">Horário:</label>
+      <label for="horario">Horario:</label>
       <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
     </div>
-    <span class="delete-button" onclick="confirmDeleteCategory(this)">Excluir</span>
+    <div>
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.name}', 'endereco', this.value)">
+    </div>
+    <div>
+      <label for="casa">Numero da casa:</label>
+      <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.name}', 'casa', this.value)">
+    </div>
+    <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.name}')">Excluir</span>
     <button onclick="redirectToWhatsApp(this)">Conversar</button>
   `;
+
   categoriesContainer.appendChild(categoryDiv);
-  checkCategories(); // Verifica se há categorias após criar uma nova
 }
 
+// Função para salvar o número de telefone ao editar
 function saveCategoriesPhoneNumber(input) {
   const categoryDiv = input.parentElement;
   const categoryName = categoryDiv.querySelector('h3').textContent;
-  const phoneNumber = input.value;
-  updateCategoryField(categoryName, 'phoneNumber', phoneNumber);
+  updateCategoryField(categoryName, 'phoneNumber', input.value);
 }
 
-function confirmDeleteCategory(deleteButton) {
-  const categoryName = deleteButton.parentElement.querySelector('h3').textContent;
-  const confirmation = confirm(`Deseja excluir a categoria "${categoryName}"?`);
-  if (confirmation) {
-    deleteCategory(deleteButton);
+// Função para excluir uma categoria
+function confirmDeleteCategory(categoryName) {
+  categoryToDelete = categoryName;
+  deleteCategoryModal.style.display = 'block';
+}
+
+function closeDeleteCategoryModal() {
+  deleteCategoryModal.style.display = 'none';
+  categoryToDelete = null;
+}
+
+function confirmDelete() {
+  if (categoryToDelete) {
+    const categoryDiv = Array.from(categoriesContainer.children).find((div) => div.querySelector('h3').textContent === categoryToDelete);
+    if (categoryDiv) {
+      categoryDiv.remove();
+      saveCategories();
+      checkEmptyCategories(); // Verifica se há categorias após excluir
+    }
   }
+  closeDeleteCategoryModal();
 }
 
-function deleteCategory(deleteButton) {
-  const categoryDiv = deleteButton.parentElement;
-  categoryDiv.remove();
-  saveCategories();
-  checkCategories(); // Verifica se há categorias após remover
-}
-
+// Função para atualizar um campo de categoria
 function updateCategoryField(categoryName, field, value) {
-  const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
   const updatedCategories = savedCategories.map((category) => {
     if (category.name === categoryName) {
       category[field] = value;
     }
     return category;
   });
-  localStorage.setItem('categories', JSON.stringify(updatedCategories));
+
+  localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
   saveCategories();
 }
 
+// Função para salvar todas as categorias
 function saveCategories() {
   const categories = Array.from(categoriesContainer.children);
   const categoriesData = categories.map((category) => ({
     name: category.querySelector('h3').textContent,
+    description: category.querySelector('p').textContent,
     phoneNumber: category.querySelector('input[type="number"]').value,
-    livro: category.querySelector('#livro').value,
-    tema: category.querySelector('#tema').value,
-    capitulo: category.querySelector('#capitulo').value,
+    nome: category.querySelector('#nome').value,
+    publicacões: category.querySelector('#publicacões').value,
+    conversa: category.querySelector('#conversa').value,
     proximoEstudo: category.querySelector('#proximoEstudo').value,
     dia: category.querySelector('#dia').value,
     horario: category.querySelector('#horario').value,
+    endereco: category.querySelector('#endereco').value,
+    casa: category.querySelector('#casa').value,
   }));
-  localStorage.setItem('categories', JSON.stringify(categoriesData));
+
+  localStorage.setItem(storageKey, JSON.stringify(categoriesData));
+  checkEmptyCategories();
 }
+
+// Função para verificar se não há categorias e exibir a mensagem correspondente
+function checkEmptyCategories() {
+  const categories = categoriesContainer.children;
+  if (categories.length === 0) {
+    emptyMessage.style.display = 'block';
+  } else {
+    emptyMessage.style.display = 'none';
+  }
+}
+
+
+
+
 
 function redirectToWhatsApp(button) {
   const categoryDiv = button.parentElement;
   const categoryName = categoryDiv.querySelector('h3').textContent;
-  const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
   const categoryData = savedCategories.find(category => category.name === categoryName);
 
   if (categoryData) {
@@ -314,31 +293,56 @@ function redirectToWhatsApp(button) {
     if (phoneNumber) {
       window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
     } else {
-      alert("Para conversar com seu estudante, adicione o número do WhatsApp dele.");
+      showAlert("Para conversar com seu estudante, adicione o número do WhatsApp dele.");
     }
   }
 }
 
+
+
+function showAlert(message) {
+  const whatsappAlert = document.getElementById('whatsappAlert');
+  whatsappAlert.textContent = message;
+  whatsappAlert.style.display = 'block';
+  setTimeout(() => {
+    whatsappAlert.style.display = 'none';
+  }, 3000);  // Esconde o alerta após 3 segundos
+}
+
+
+
+// Função para pesquisar categorias
 function searchCategories() {
   const searchTerm = searchInput.value.toLowerCase();
   const categories = categoriesContainer.children;
+  let found = false;
+
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
     const categoryName = category.querySelector('h3').textContent.toLowerCase();
+
     if (categoryName.includes(searchTerm)) {
       category.style.display = 'block';
+      found = true;
     } else {
       category.style.display = 'none';
     }
   }
+
+  if (!found) {
+    customAlert.style.display = 'block'; // Exibe o alerta personalizado
+  } else {
+    customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
+  }
 }
 
+// Função para formatar a hora
 function formatHora(input) {
   const hora = input.value;
   if (hora.length === 2 && hora.indexOf(':') === -1) {
     input.value = hora + ':00';
   }
-  saveCategories(); // Altere de saveHorario() para saveCategories()
+  saveCategories();
 }
 
 function saveHorario() {
@@ -357,19 +361,12 @@ function loadHorario() {
 document.getElementById("horario").addEventListener("input", formatHora);
 loadHorario();
 
-function checkCategories() {
-  const messageElement = document.getElementById('noCategoriesMessage');
-  if (categoriesContainer.children.length === 0) {
-    if (!messageElement) {
-      const noCategoriesMessage = document.createElement('p');
-      noCategoriesMessage.id = 'noCategoriesMessage';
-      noCategoriesMessage.textContent = 'Não há nada aqui';
-      categoriesContainer.appendChild(noCategoriesMessage);
-    }
-  } else {
-    if (messageElement) {
-      messageElement.remove();
-    }
-  }
-}
+ 
+
+
+
+
 </script>
+</body>
+</html>
+
