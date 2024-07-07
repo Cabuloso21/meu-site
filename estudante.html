@@ -1,10 +1,13 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gerenciamento de Categorias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Categorias</title>
+</head>
+<body>
+  
 <style>
   /* Estilos básicos para garantir a exibição dos elementos */
   body {
@@ -40,9 +43,11 @@
   }
 
   .modal button {
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin-top: 10px;
-  }
+     background: lime;
+
+ }
 
   .modal-overlay {
     display: none;
@@ -54,319 +59,481 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 998; /* Z-index menor que o modal para ficar atrás dele */
   }
-</style>
-</head>
-<body>
-<button id="addCategory">Adicionar</button>
-<input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
-
-<div id="categoriesContainer">
-  <p id="emptyMessage">Não há nada aqui</p>
-</div>
-
- <div class="alert" id="whatsappAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Para conversar, adicione o número do WhatsApp.</div>
-</div>
-  
-  
-
-<div class="alert" id="customAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Categoria não existe</div>
-
-<div class="modal" id="addCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
-  <h2>Adicionar Categoria</h2>
-  <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
-  <button onclick="confirmAddCategory()" style="padding: 10px 20px; margin-top: 10px;">Adicionar</button>
-  <button onclick="closeCategoryModal()" style="padding: 10px 20px; margin-top: 10px;">Cancelar</button>
-</div>
-
-<div class="modal" id="deleteCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
-  <p>Deseja excluir esta categoria?</p>
-  <button onclick="confirmDelete()">Sim</button>
-  <button onclick="closeDeleteCategoryModal()">Não</button>
-</div>
-
-<script>
-// Função para obter a chave da página
-function pageKey() {
-  return 'pagina1';
-}
-
-// Use uma chave específica para esta página
-const storageKey = `categories_${pageKey()}`;
-
-const addButton = document.getElementById('addCategory');
-const searchInput = document.getElementById('searchCategory');
-const categoriesContainer = document.getElementById('categoriesContainer');
-const emptyMessage = document.getElementById('emptyMessage');
-const customAlert = document.getElementById('customAlert');
-const addCategoryModal = document.getElementById('addCategoryModal');
-const categoryNameInput = document.getElementById('categoryNameInput');
-
-const deleteCategoryModal = document.getElementById('deleteCategoryModal');
-
-let categoryToDelete = null; // Armazena a categoria a ser excluída
-
-// Carregar categorias do localStorage ao carregar a página
-window.addEventListener('load', loadCategories);
-
-addButton.addEventListener('click', showCategoryModal);
-
-function loadCategories() {
-  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-  categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
-  savedCategories.forEach((categoryData) => {
-    createCategory(categoryData);
-  });
-  checkEmptyCategories();
-}
-
-function showCategoryModal() {
-  addCategoryModal.style.display = 'block';
-  categoryNameInput.focus();
-}
-
-function closeCategoryModal() {
-  addCategoryModal.style.display = 'none';
-}
-
-function confirmAddCategory() {
-  const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
-  if (categoryName) {
-    const categoryData = {
-      name: categoryName,
-      description: "Contato",
-      nome: "",
-      publicacões: "",
-      conversa: "",
-      proximoEstudo: "",
-      dia: "",
-      horario: "",
-      endereco: "",
-      casa: "",
-      phoneNumber: ""
-    };
-
-    createCategory(categoryData);
-    saveCategories();
-    closeCategoryModal();
-    categoryNameInput.value = '';
-  }
-}
-
-function createCategory(categoryData) {
-  // Remove a mensagem "Não há nada aqui" se existir
-  if (emptyMessage) {
-    emptyMessage.style.display = 'none';
-  }
-
-  const categoryDiv = document.createElement('div');
-  categoryDiv.innerHTML = `
-    <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
-    <p contenteditable="true" oninput="saveCategories()">${categoryData.description}</p>
-    <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
-    <!-- Resto do seu código HTML aqui -->
-    <div>
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" value="${categoryData.nome}" oninput="updateCategoryField('${categoryData.name}', 'nome', this.value)">
-    </div>
-    <div>
-      <label for="publicacões">Publicações:</label>
-      <input type="text" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.name}', 'publicacões', this.value)">
-    </div>
-    <div>
-      <label for="conversa">Primeira conversa:</label>
-      <input type="text" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.name}', 'conversa', this.value)">
-    </div>
-    <div>
-      <label for="proximoEstudo">Proxima conversa:</label>
-      <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.name}', 'proximoEstudo', this.value)">
-    </div>
-    <div>
-      <label for="dia">Dia:</label>
-      <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.name}', 'dia', this.value)">
-    </div>
-    <div>
-      <label for="horario">Horario:</label>
-      <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
-    </div>
-    <div>
-      <label for="endereco">Endereço:</label>
-      <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.name}', 'endereco', this.value)">
-    </div>
-    <div>
-      <label for="casa">Numero da casa:</label>
-      <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.name}', 'casa', this.value)">
-    </div>
-    <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.name}')">Excluir</span>
-    <button onclick="redirectToWhatsApp(this)">Conversar</button>
-  `;
-
-  categoriesContainer.appendChild(categoryDiv);
-}
-
-// Função para salvar o número de telefone ao editar
-function saveCategoriesPhoneNumber(input) {
-  const categoryDiv = input.parentElement;
-  const categoryName = categoryDiv.querySelector('h3').textContent;
-  updateCategoryField(categoryName, 'phoneNumber', input.value);
-}
-
-// Função para excluir uma categoria
-function confirmDeleteCategory(categoryName) {
-  categoryToDelete = categoryName;
-  deleteCategoryModal.style.display = 'block';
-}
-
-function closeDeleteCategoryModal() {
-  deleteCategoryModal.style.display = 'none';
-  categoryToDelete = null;
-}
-
-function confirmDelete() {
-  if (categoryToDelete) {
-    const categoryDiv = Array.from(categoriesContainer.children).find((div) => div.querySelector('h3').textContent === categoryToDelete);
-    if (categoryDiv) {
-      categoryDiv.remove();
-      saveCategories();
-      checkEmptyCategories(); // Verifica se há categorias após excluir
-    }
-  }
-  closeDeleteCategoryModal();
-}
-
-// Função para atualizar um campo de categoria
-function updateCategoryField(categoryName, field, value) {
-  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-  const updatedCategories = savedCategories.map((category) => {
-    if (category.name === categoryName) {
-      category[field] = value;
-    }
-    return category;
-  });
-
-  localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
-  saveCategories();
-}
-
-// Função para salvar todas as categorias
-function saveCategories() {
-  const categories = Array.from(categoriesContainer.children);
-  const categoriesData = categories.map((category) => ({
-    name: category.querySelector('h3').textContent,
-    description: category.querySelector('p').textContent,
-    phoneNumber: category.querySelector('input[type="number"]').value,
-    nome: category.querySelector('#nome').value,
-    publicacões: category.querySelector('#publicacões').value,
-    conversa: category.querySelector('#conversa').value,
-    proximoEstudo: category.querySelector('#proximoEstudo').value,
-    dia: category.querySelector('#dia').value,
-    horario: category.querySelector('#horario').value,
-    endereco: category.querySelector('#endereco').value,
-    casa: category.querySelector('#casa').value,
-  }));
-
-  localStorage.setItem(storageKey, JSON.stringify(categoriesData));
-  checkEmptyCategories();
-}
-
-// Função para verificar se não há categorias e exibir a mensagem correspondente
-function checkEmptyCategories() {
-  const categories = categoriesContainer.children;
-  if (categories.length === 0) {
-    emptyMessage.style.display = 'block';
-  } else {
-    emptyMessage.style.display = 'none';
-  }
-}
 
 
 
 
 
-function redirectToWhatsApp(button) {
-  const categoryDiv = button.parentElement;
-  const categoryName = categoryDiv.querySelector('h3').textContent;
-  const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-  const categoryData = savedCategories.find(category => category.name === categoryName);
-
-  if (categoryData) {
-    const phoneNumber = categoryData.phoneNumber;
-    if (phoneNumber) {
-      window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-    } else {
-      showAlert("Para conversar com seu estudante, adicione o número do WhatsApp dele.");
-    }
-  }
-}
 
 
 
-function showAlert(message) {
-  const whatsappAlert = document.getElementById('whatsappAlert');
-  whatsappAlert.textContent = message;
-  whatsappAlert.style.display = 'block';
-  setTimeout(() => {
-    whatsappAlert.style.display = 'none';
-  }, 3000);  // Esconde o alerta após 3 segundos
-}
 
 
+.arrow {
+ display: inline-block;
+ width: 10px;
+ height: 10px;
+ border-top: 2px solid black;
+ border-right: 2px solid black;
+ transform: rotate(-130deg);
+ position: absolute;
+ top: 21px;
+ left: 15px;
 
-// Função para pesquisar categorias
-function searchCategories() {
-  const searchTerm = searchInput.value.toLowerCase();
-  const categories = categoriesContainer.children;
-  let found = false;
+ }
 
-  for (let i = 0; i < categories.length; i++) {
-    const category = categories[i];
-    const categoryName = category.querySelector('h3').textContent.toLowerCase();
-
-    if (categoryName.includes(searchTerm)) {
-      category.style.display = 'block';
-      found = true;
-    } else {
-      category.style.display = 'none';
-    }
-  }
-
-  if (!found) {
-    customAlert.style.display = 'block'; // Exibe o alerta personalizado
-  } else {
-    customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
-  }
-}
-
-// Função para formatar a hora
-function formatHora(input) {
-  const hora = input.value;
-  if (hora.length === 2 && hora.indexOf(':') === -1) {
-    input.value = hora + ':00';
-  }
-  saveCategories();
-}
-
-function saveHorario() {
-  const horarioInput = document.getElementById("horario");
-  const horario = horarioInput.value;
-  localStorage.setItem("horario", horario);
-}
-
-function loadHorario() {
-  const horarioSaved = localStorage.getItem("horario");
-  if (horarioSaved) {
-    document.getElementById("horario").value = horarioSaved;
-  }
-}
-
-document.getElementById("horario").addEventListener("input", formatHora);
-loadHorario();
-
+  body {
+  max-width: 1200px; /* ou outro valor que você preferir */
+  margin: 0 auto; /* centraliza a página */
  
+ }
+
+  header, #categoriesContainer > div {
+  width: 91.60%; /* Ocupa 100% da largura disponível */
+  max-width: 1200px; /* ou outro valor que você preferir */
+  margin: 0 auto; /* Centraliza os elementos */
+  background: #cc0;
+  Padding: 15px;
+
+ }
+
+  .logo {
+  margin: 0;
+  margin-top: 0px;
+  font-size: 22px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+    
+ }
+
+  #addCategory {
+  background-color: #cc2;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 15px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 15px;
+  font-weight: bold;
+      
+ }
+
+  #addCategory:hover {
+  background-color: #cc2;
+        
+ }
+
+  
+ #searchCategory {
+  padding: 12px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+ }
+
+  
+ #categoriesContainer > div {
+       
+  border: 1px solid silver;
+  border-radius: 5px;
+  position: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 22px;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+  margin-left: 4px;   
+    
+ }
+      
+  #categoriesContainer > div h3 {
+  font-size: 22px;
+  margin-left: 0px;
+  margin-top: 1px;
+  color: black;
+  border-bottom: nonepx solid #cc1;
+  
+ }
+
+  
+  
+
+    
+  input[type="number"] {
+  width: 40%;
+  margin-top: 1px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 35px;
+  margin-left: 0px;
+      
+ }
+
+ .delete-button {
+  color: #f00;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 10px;
+      
+ }
+
+ .delete-button:hover {
+  text-decoration: underline;
+      
+ }
+
+  button {
+  background-color: #cc2;
+  color: black;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-left: 180px;
+  font-size: 15px;
+  font-weight: bold;
+      
+ }
+
+  button:hover {
+  background-color: #none;
+    
+}
+
+  
+  label {
+  margin-left: 0px;
+  color: black;
+  font-size: 16.50px;
+  font-weight: bold;
+  
+}
+
+  #categoriesContainer> div input[type="text"] {
+ Padding: 10px;
+  width: 305px;
+  margin-left: 0px;
+  border: none;
+  border-radius: none;
+  font-size: 16px;
+  border-bottom: 1.50px solid #ccc;
+  margin-bottom: 30px;
+  color: Black;
+
+ } 
+
+</style>
 
 
+<a href="index.html">
+ <span class="arrow"></span>
+ </a>
+ </div>
+  
+ <header>
+ <div class="logo">Estudantes</div>
+ </header>
 
 
-</script>
+<button id="addCategory">Adicionar</button>
+  <input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
+
+  <div id="categoriesContainer">
+    <p id="emptyMessage">Não há nada aqui</p>
+  </div>
+
+  <div class="alert" id="whatsappAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Para conversar, adicione o número do WhatsApp.</div>
+
+  <div class="alert" id="customAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Categoria não existe</div>
+
+  <div class="modal" id="addCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
+    <h2>Adicionar Categoria</h2>
+    <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
+    <button onclick="confirmAddCategory()" style="padding: 10px 20px; margin-top: 10px;">Adicionar</button>
+    <button onclick="closeCategoryModal()" style="padding: 10px 20px; margin-top: 10px;">Cancelar</button>
+  </div>
+
+  <div class="modal" id="deleteCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
+    <p>Deseja excluir esta categoria?</p>
+    <button onclick="confirmDelete()">Sim</button>
+    <button onclick="closeDeleteCategoryModal()">Não</button>
+  </div>
+
+  <script>
+    // Função para gerar um identificador único
+    function generateUniqueId() {
+      return 'category_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Função para obter a chave da página
+    function pageKey() {
+      return 'pagina1';
+    }
+
+    // Use uma chave específica para esta página
+    const storageKey = `categories_${pageKey()}`;
+
+    const addButton = document.getElementById('addCategory');
+    const searchInput = document.getElementById('searchCategory');
+    const categoriesContainer = document.getElementById('categoriesContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const customAlert = document.getElementById('customAlert');
+    const addCategoryModal = document.getElementById('addCategoryModal');
+    const categoryNameInput = document.getElementById('categoryNameInput');
+    const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+    let categoryToDelete = null; // Armazena a categoria a ser excluída
+
+    // Carregar categorias do localStorage ao carregar a página
+    window.addEventListener('load', loadCategories);
+
+    addButton.addEventListener('click', showCategoryModal);
+
+    function loadCategories() {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
+      savedCategories.forEach((categoryData) => {
+        createCategory(categoryData);
+      });
+      checkEmptyCategories();
+    }
+
+    function showCategoryModal() {
+      addCategoryModal.style.display = 'block';
+      categoryNameInput.focus();
+    }
+
+    function closeCategoryModal() {
+      addCategoryModal.style.display = 'none';
+    }
+
+    function confirmAddCategory() {
+      const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
+      if (categoryName) {
+        const categoryData = {
+          id: generateUniqueId(),
+          name: categoryName,
+          nome: "",
+          publicacões: "",
+          conversa: "",
+          proximoEstudo: "",
+          dia: "",
+          horario: "",
+          endereco: "",
+          casa: "",
+          phoneNumber: ""
+        };
+
+        createCategory(categoryData);
+        saveCategories();
+        closeCategoryModal();
+        categoryNameInput.value = '';
+      }
+    }
+
+    function createCategory(categoryData) {
+      // Remove a mensagem "Não há nada aqui" se existir
+      if (emptyMessage) {
+        emptyMessage.style.display = 'none';
+      }
+
+      const categoryDiv = document.createElement('div');
+      categoryDiv.id = categoryData.id;
+      categoryDiv.innerHTML = `
+        <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
+        <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
+        <!-- Resto do seu código HTML aqui -->
+        <div>
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" value="${categoryData.nome}" oninput="updateCategoryField('${categoryData.id}', 'nome', this.value)">
+        </div>
+        <div>
+          <label for="publicacões">Publicações:</label>
+          <input type="text" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
+        </div>
+        <div>
+          <label for="conversa">Primeira conversa:</label>
+          <input type="text" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
+        </div>
+        <div>
+          <label for="proximoEstudo">Proxima conversa:</label>
+          <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
+        </div>
+        <div>
+          <label for="dia">Dia:</label>
+          <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.id}', 'dia', this.value)">
+        </div>
+        <div>
+          <label for="horario">Horario:</label>
+          <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
+        </div>
+        <div>
+          <label for="endereco">Endereço:</label>
+          <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.id}', 'endereco', this.value)">
+        </div>
+        <div>
+          <label for="casa">Numero da casa:</label>
+          <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.id}', 'casa', this.value)">
+        </div>
+        <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
+        <button onclick="redirectToWhatsApp(this)">Conversar</button>
+      `;
+
+      categoriesContainer.appendChild(categoryDiv);
+    }
+
+    function saveCategoriesPhoneNumber(input) {
+      const categoryDiv = input.parentElement;
+      const categoryId = categoryDiv.id;
+      updateCategoryField(categoryId, 'phoneNumber', input.value);
+    }
+
+    function confirmDeleteCategory(categoryId) {
+      categoryToDelete = categoryId;
+      deleteCategoryModal.style.display = 'block';
+    }
+
+    function closeDeleteCategoryModal() {
+      deleteCategoryModal.style.display = 'none';
+      categoryToDelete = null;
+    }
+
+    function confirmDelete() {
+      if (categoryToDelete) {
+        const categoryDiv = document.getElementById(categoryToDelete);
+        if (categoryDiv) {
+          categoryDiv.remove();
+          saveCategories();
+          checkEmptyCategories(); // Verifica se há categorias após excluir
+        }
+      }
+      closeDeleteCategoryModal();
+    }
+
+    function updateCategoryField(categoryId, field, value) {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const updatedCategories = savedCategories.map((category) => {
+        if (category.id === categoryId) {
+          category[field] = value;
+        }
+        return category;
+      });
+
+      localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
+      saveCategories();
+    }
+
+    function saveCategories() {
+      const categories = Array.from(categoriesContainer.children);
+      const categoriesData = categories.map((category) => ({
+        id: category.id,
+        name: category.querySelector('h3').textContent,
+        phoneNumber: category.querySelector('input[type="number"]').value,
+        nome: category.querySelector('#nome').value,
+        publicacões: category.querySelector('#publicacões').value,
+        conversa: category.querySelector('#conversa').value,
+        proximoEstudo: category.querySelector('#proximoEstudo').value,
+        dia: category.querySelector('#dia').value,
+        horario: category.querySelector('#horario').value,
+        endereco: category.querySelector('#endereco').value,
+        casa: category.querySelector('#casa').value,
+      }));
+
+      localStorage.setItem(storageKey, JSON.stringify(categoriesData));
+      checkEmptyCategories();
+    }
+
+    function checkEmptyCategories() {
+      const categories = categoriesContainer.children;
+      if (categories.length === 0) {
+        emptyMessage.style.display = 'block';
+      } else {
+        emptyMessage.style.display = 'none';
+      }
+    }
+
+    function redirectToWhatsApp(button) {
+      const categoryDiv = button.parentElement;
+      const categoryId = categoryDiv.id;
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const categoryData = savedCategories.find(category => category.id === categoryId);
+
+      if (categoryData) {
+        const phoneNumber = categoryData.phoneNumber;
+        if (phoneNumber) {
+          window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+        } else {
+          showAlert("Para conversar com seu estudante, adicione o número do WhatsApp dele.");
+        }
+      }
+    }
+
+    function showAlert(message) {
+      const whatsappAlert = document.getElementById('whatsappAlert');
+      whatsappAlert.textContent = message;
+      whatsappAlert.style.display = 'block';
+      setTimeout(() => {
+        whatsappAlert.style.display = 'none';
+      }, 3000);  // Esconde o alerta após 3 segundos
+    }
+
+    function searchCategories() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const categories = categoriesContainer.children;
+      let found = false;
+
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+        const categoryName = category.querySelector('h3').textContent.toLowerCase();
+
+        if (categoryName.includes(searchTerm)) {
+          category.style.display = 'block';
+          found = true;
+        } else {
+          category.style.display = 'none';
+        }
+      }
+
+      if (!found) {
+        customAlert.style.display = 'block'; // Exibe o alerta personalizado
+      } else {
+        customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
+      }
+    }
+
+    function formatHora(input) {
+      const hora = input.value;
+      if (hora.length === 2 && hora.indexOf(':') === -1) {
+        input.value = hora + ':00';
+      }
+      saveCategories();
+    }
+
+    function saveHorario() {
+      const horarioInput = document.getElementById("horario");
+      const horario = horarioInput.value;
+      localStorage.setItem("horario", horario);
+    }
+
+    function loadHorario() {
+      const horarioSaved = localStorage.getItem("horario");
+      if (horarioSaved) {
+        document.getElementById("horario").value = horarioSaved;
+      }
+    }
+
+    document.getElementById("horario").addEventListener("input", formatHora);
+    loadHorario();
+  </script>
 </body>
 </html>
+
 
