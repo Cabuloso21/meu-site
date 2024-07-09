@@ -1,75 +1,19 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerenciador de Categorias</title>
-</head>
-<body>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Gerenciador de Categorias</title>
   
 <style>
-  /* Estilos básicos para garantir a exibição dos elementos */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: white;
-    
-  }
-
-  
-  
-  
-  
-  .modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    color: lime;
-    padding: 40px;
-    border: 1px solid #ccc;
-    z-index: 999;
-  }
-
-  .modal input {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: calc(100% - 22px);
-  }
-
-  .modal button {
-    padding: 10px 10px;
-    margin-top: 10px;
-     background: lime;
-
+ body {
+ font-family: Arial, sans-serif;
+ background-color: #f4f4f4;
+ margin: 0;
+      
  }
 
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998; /* Z-index menor que o modal para ficar atrás dele */
-  }
-
-
-
-
-
-
-
-
-
-
-.arrow {
+ .arrow {
  display: inline-block;
  width: 10px;
  height: 10px;
@@ -82,158 +26,224 @@
 
  }
 
-  body {
-  max-width: 1200px; /* ou outro valor que você preferir */
-  margin: 0 auto; /* centraliza a página */
- 
- }
-
-  header, #categoriesContainer > div {
-  width: 91.60%; /* Ocupa 100% da largura disponível */
-  max-width: 1200px; /* ou outro valor que você preferir */
-  margin: 0 auto; /* Centraliza os elementos */
-  background: #cc0;
-  Padding: 15px;
+ header {
+ background: orange;
+ Padding: 15px;
 
  }
 
-  .logo {
-  margin: 0;
-  margin-top: 0px;
-  font-size: 22px;
-  font-weight: bold;
-  color: black;
-  text-align: center;
+.logo {
+ margin: 0;
+ margin-top: 0px;
+ font-size: 22px;
+ font-weight: bold;
+ color: black;
+ text-align: center;
     
  }
 
-  #addCategory {
-  background-color: #cc2;
-  color: black;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-left: 15px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  font-size: 15px;
-  font-weight: bold;
-      
+ button {
+ background-color: #4CAF50;
+ color: white;
+ border: none;
+ padding: 10px 20px;
+ margin: 10px;
+ cursor: pointer;
+ border-radius: 5px;
+    
  }
 
-  #addCategory:hover {
-  background-color: #cc2;
-        
+ button:hover {
+ background-color: #45a049;
+    
  }
 
-  
+ butão {
+ background-color: #4CAF50;
+ color: white;
+ border: none;
+ padding: 4px 10px;
+ margin: 10px;
+ margin-left: 50%;
+ cursor: pointer;
+ border-radius: 5px;
+    
+ }
+ 
+
  #searchCategory {
   padding: 12px;
   margin-left: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  
+  background: white;
+ }
+ 
+
+ .category label {
+ display: block;
+ font-weight: bold;
+ margin-bottom: 5px;
+    
  }
 
+ 
+
+
+ .modal {
+ display: none;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ background-color: white;
+ padding: 40px;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ z-index: 1000;
+    
+ }
+
+ .modal h3 {
+ margin-top: 0;
+ color: black;
+ font-size: 17px;
+ text-align: center;
+
+ }
+
+ .modal .modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
+
+ .alert {
+ display: none;
+ position: fixed;
+ top: 130px;
+ left: 60%;
+ transform: translateX(-50%);
+ background-color: #f44336;
+ color: white;
+ padding: 10px;
+ border-radius: 5px;
+ z-index: 1000;
+    
+ }
+
+ .delete-modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
   
  #categoriesContainer > div {
-       
-  border: 1px solid silver;
-  border-radius: 5px;
-  position: center;
-  flex-wrap: wrap;
-  padding: 10px;
-  background: white;
-  border-radius: 5px;
-  margin-bottom: 22px;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
-  margin-left: 4px;   
-    
+ border: 1px solid silver;
+ border-radius: 5px;
+ position: center;
+ flex-wrap: wrap;
+ padding: 10px;
+ background: white;
+ border-radius: 5px;
+ margin-bottom: 22px;
+ box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+ margin-left: 5px;   
+ width: 91%; /* Ocupa 100% da largura disponível */
+ margin-top: 20px;
+
  }
+
+ #addCategory {
+ background-color: orange;
+ color: black;
+ padding: 12px 20px;
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ margin-left: 15px;
+ margin-top: 20px;
+ margin-bottom: 40px;
+ font-size: 15px;
+ font-weight: bold;
       
-  #categoriesContainer > div h3 {
-  font-size: 22px;
-  margin-left: 0px;
-  margin-top: 1px;
-  color: black;
-  border-bottom: nonepx solid #cc1;
+ }
+
+ #addCategory:hover {
+ background-color: orange;
+        
+ }
+   
+ #categoriesContainer > div h3 {
+ font-size: 22px;
+ margin-left: 0px;
+ margin-top: 1px;
+ color: orange ;
+ border-bottom: nonepx solid #cc1;
   
  }
 
-  
-  
-
-    
-  input[type="number"] {
-  width: 40%;
-  margin-top: 1px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 35px;
-  margin-left: 0px;
+ input[type="number"] {
+ width: 40%;
+ margin-top: 1px;
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ margin-bottom: 35px;
+ margin-left: 0px;
       
  }
 
  .delete-button {
-  color: #f00;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  margin-left: 10px;
+ color: #f00;
+ cursor: pointer;
+ font-size: 15px;
+ font-weight: bold;
+ margin-left: 10px;
       
  }
 
  .delete-button:hover {
-  text-decoration: underline;
+ text-decoration: underline;
       
  }
 
-  button {
-  background-color: #cc2;
-  color: black;
-  padding: 10px 10px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  margin-left: 180px;
-  font-size: 15px;
-  font-weight: bold;
-      
- }
-
-  button:hover {
-  background-color: #none;
+ button:hover {
+ background-color: #none;
     
-}
+ }
 
   
-  label {
-  margin-left: 0px;
-  color: black;
-  font-size: 16.50px;
-  font-weight: bold;
+ label {
+ margin-left: 0px;
+ color: black;
+ font-size: 16.50px;
+ font-weight: bold;
   
-}
+ }
 
-  #categoriesContainer> div input[type="text"] {
+ #categoriesContainer> div input[type="text"] {
  Padding: 10px;
-  width: 305px;
-  margin-left: 0px;
-  border: none;
-  border-radius: none;
-  font-size: 16px;
-  border-bottom: 1.50px solid #ccc;
-  margin-bottom: 30px;
-  color: Black;
+ width: 310px;
+ margin-left: 0px;
+ border: none;
+ border-radius: none;
+ font-size: 16px;
+ border-bottom: 1.50px solid #ccc;
+ margin-bottom: 30px;
+ color: black;
 
  } 
 
+
 </style>
-
-
-<a href="admi.html">
+</head>
+<body>
+ 
+ <a href="index.html">
  <span class="arrow"></span>
  </a>
  </div>
@@ -242,29 +252,31 @@
  <div class="logo">Estudantes</div>
  </header>
 
-
-<button id="addCategory">Adicionar</button>
+ <button id="addCategory">Adicionar</button>
   <input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
 
   <div id="categoriesContainer">
     <p id="emptyMessage">Não há nada aqui</p>
   </div>
 
-  <div class="alert" id="whatsappAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Para conversar, adicione o número do WhatsApp.</div>
+  <div class="alert" id="whatsappAlert">Para conversar, adicione o número do WhatsApp.</div>
+  <div class="alert" id="customAlert">Categoria não existe</div>
 
-  <div class="alert" id="customAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #f44336; color: white; padding: 20px; border-radius: 5px; z-index: 1000;">Categoria não existe</div>
-
-  <div class="modal" id="addCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
-    <h2>Adicionar Categoria</h2>
+  <div class="modal" id="addCategoryModal">
+    <h3>Adicionar estudante</h3>
     <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
-    <button onclick="confirmAddCategory()" style="padding: 10px 20px; margin-top: 10px;">Adicionar</button>
-    <button onclick="closeCategoryModal()" style="padding: 10px 20px; margin-top: 10px;">Cancelar</button>
+    <div class="modal-buttons">
+      <button onclick="confirmAddCategory()">Adicionar</button>
+      <button onclick="closeCategoryModal()">Cancelar</button>
+    </div>
   </div>
 
-  <div class="modal" id="deleteCategoryModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; color: black; padding: 40px; border: 1px solid #ccc; z-index: 999;">
+  <div class="modal" id="deleteCategoryModal">
     <p>Deseja excluir esta categoria?</p>
-    <button onclick="confirmDelete()">Sim</button>
-    <button onclick="closeDeleteCategoryModal()">Não</button>
+    <div class="delete-modal-buttons">
+      <button onclick="confirmDelete()">Sim</button>
+      <button onclick="closeDeleteCategoryModal()">Não</button>
+    </div>
   </div>
 
   <script>
@@ -347,6 +359,7 @@
 
       const categoryDiv = document.createElement('div');
       categoryDiv.id = categoryData.id;
+      categoryDiv.className = 'category';
       categoryDiv.innerHTML = `
         <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
         <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
@@ -380,11 +393,11 @@
           <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.id}', 'endereco', this.value)">
         </div>
         <div>
-          <label for="casa">Numero da casa:</label>
+          <label for="casa">Ponto de referência:</label>
           <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.id}', 'casa', this.value)">
         </div>
         <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
-        <button onclick="redirectToWhatsApp(this)">Conversar</button>
+        <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
       `;
 
       categoriesContainer.appendChild(categoryDiv);
@@ -471,7 +484,7 @@
         if (phoneNumber) {
           window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
         } else {
-          showAlert("Para conversar com seu estudante, adicione o número do WhatsApp dele.");
+          showAlert("Por favor, adicione o número do estudante.");
         }
       }
     }
@@ -535,5 +548,3 @@
   </script>
 </body>
 </html>
-
-
