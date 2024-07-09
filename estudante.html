@@ -1,3 +1,4 @@
+
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -27,7 +28,7 @@
  }
 
  header {
- background: orange;
+ background: #333;
  Padding: 15px;
 
  }
@@ -253,290 +254,268 @@
  </header>
 
  <button id="addCategory">Adicionar</button>
-  <input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
+<input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
 
-  <div id="categoriesContainer">
-    <p id="emptyMessage">Não há nada aqui</p>
+<div id="categoriesContainer">
+  <p id="emptyMessage">Não há nada aqui</p>
+</div>
+
+<div class="alert" id="whatsappAlert">Para conversar, adicione o número do WhatsApp.</div>
+<div class="alert" id="customAlert">Categoria não existe</div>
+
+<div class="modal" id="addCategoryModal">
+  <h3>Adicionar estudante</h3>
+  <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
+  <div class="modal-buttons">
+    <button onclick="confirmAddCategory()">Adicionar</button>
+    <button onclick="closeCategoryModal()">Cancelar</button>
   </div>
+</div>
 
-  <div class="alert" id="whatsappAlert">Para conversar, adicione o número do WhatsApp.</div>
-  <div class="alert" id="customAlert">Categoria não existe</div>
-
-  <div class="modal" id="addCategoryModal">
-    <h3>Adicionar estudante</h3>
-    <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
-    <div class="modal-buttons">
-      <button onclick="confirmAddCategory()">Adicionar</button>
-      <button onclick="closeCategoryModal()">Cancelar</button>
-    </div>
+<div class="modal" id="deleteCategoryModal">
+  <p>Deseja excluir esta categoria?</p>
+  <div class="delete-modal-buttons">
+    <button onclick="confirmDelete()">Sim</button>
+    <button onclick="closeDeleteCategoryModal()">Não</button>
   </div>
+</div>
 
-  <div class="modal" id="deleteCategoryModal">
-    <p>Deseja excluir esta categoria?</p>
-    <div class="delete-modal-buttons">
-      <button onclick="confirmDelete()">Sim</button>
-      <button onclick="closeDeleteCategoryModal()">Não</button>
-    </div>
-  </div>
+<script>
+  // Função para gerar um identificador único
+  function generateUniqueId() {
+    return 'category_' + Math.random().toString(36).substr(2, 9);
+  }
 
-  <script>
-    // Função para gerar um identificador único
-    function generateUniqueId() {
-      return 'category_' + Math.random().toString(36).substr(2, 9);
+  // Função para obter a chave da página
+  function pageKey() {
+    return 'pagina1';
+  }
+
+  // Use uma chave específica para esta página
+  const storageKey = `categories_${pageKey()}`;
+
+  const addButton = document.getElementById('addCategory');
+  const searchInput = document.getElementById('searchCategory');
+  const categoriesContainer = document.getElementById('categoriesContainer');
+  const emptyMessage = document.getElementById('emptyMessage');
+  const customAlert = document.getElementById('customAlert');
+  const addCategoryModal = document.getElementById('addCategoryModal');
+  const categoryNameInput = document.getElementById('categoryNameInput');
+  const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+  let categoryToDelete = null; // Armazena a categoria a ser excluída
+
+  // Carregar categorias do localStorage ao carregar a página
+  window.addEventListener('load', loadCategories);
+
+  addButton.addEventListener('click', showCategoryModal);
+
+  function loadCategories() {
+    const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+    categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
+    savedCategories.forEach((categoryData) => {
+      createCategory(categoryData);
+    });
+    checkEmptyCategories();
+  }
+
+  function showCategoryModal() {
+    addCategoryModal.style.display = 'block';
+    categoryNameInput.focus();
+  }
+
+  function closeCategoryModal() {
+    addCategoryModal.style.display = 'none';
+  }
+
+  function confirmAddCategory() {
+    const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
+    if (categoryName) {
+      const categoryData = {
+        id: generateUniqueId(),
+        name: categoryName,
+        livro: "",
+        assunto: "",
+        capitulo: "",
+        proximoEstudo: "",
+        dia: "",
+        horario: "",
+        phoneNumber: ""
+      };
+
+      createCategory(categoryData);
+      saveCategories();
+      closeCategoryModal();
+      categoryNameInput.value = '';
+    }
+  }
+
+  function createCategory(categoryData) {
+    // Remove a mensagem "Não há nada aqui" se existir
+    if (emptyMessage) {
+      emptyMessage.style.display = 'none';
     }
 
-    // Função para obter a chave da página
-    function pageKey() {
-      return 'pagina1';
-    }
-
-    // Use uma chave específica para esta página
-    const storageKey = `categories_${pageKey()}`;
-
-    const addButton = document.getElementById('addCategory');
-    const searchInput = document.getElementById('searchCategory');
-    const categoriesContainer = document.getElementById('categoriesContainer');
-    const emptyMessage = document.getElementById('emptyMessage');
-    const customAlert = document.getElementById('customAlert');
-    const addCategoryModal = document.getElementById('addCategoryModal');
-    const categoryNameInput = document.getElementById('categoryNameInput');
-    const deleteCategoryModal = document.getElementById('deleteCategoryModal');
-
-    let categoryToDelete = null; // Armazena a categoria a ser excluída
-
-    // Carregar categorias do localStorage ao carregar a página
-    window.addEventListener('load', loadCategories);
-
-    addButton.addEventListener('click', showCategoryModal);
-
-    function loadCategories() {
-      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-      categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
-      savedCategories.forEach((categoryData) => {
-        createCategory(categoryData);
-      });
-      checkEmptyCategories();
-    }
-
-    function showCategoryModal() {
-      addCategoryModal.style.display = 'block';
-      categoryNameInput.focus();
-    }
-
-    function closeCategoryModal() {
-      addCategoryModal.style.display = 'none';
-    }
-
-    function confirmAddCategory() {
-      const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
-      if (categoryName) {
-        const categoryData = {
-          id: generateUniqueId(),
-          name: categoryName,
-          livro: "",
-          assunto: "",
-          capitulo: "",
-          proximoEstudo: "",
-          dia: "",
-          horario: "",
-          phoneNumber: ""
-        };
-
-        createCategory(categoryData);
-        saveCategories();
-        closeCategoryModal();
-        categoryNameInput.value = '';
-      }
-    }
-
-    function createCategory(categoryData) {
-      // Remove a mensagem "Não há nada aqui" se existir
-      if (emptyMessage) {
-        emptyMessage.style.display = 'none';
-      }
-
-      const categoryDiv = document.createElement('div');
-      categoryDiv.id = categoryData.id;
-      categoryDiv.className = 'category';
-      categoryDiv.innerHTML = `
-        <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
-        <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
-        <!-- Resto do seu código HTML aqui -->
-        <div>
-          
+    const categoryDiv = document.createElement('div');
+    categoryDiv.id = categoryData.id;
+    categoryDiv.className = 'category';
+    categoryDiv.innerHTML = `
+      <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
+      <input type="number" class="phoneNumber" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategories()">
+      <!-- Resto do seu código HTML aqui -->
+      <div>
         <label for="livro">Livro de estudo:</label>
-          <input type="text" id="livro" value="${categoryData.livro}" oninput="updateCategoryField('${categoryData.id}', 'livro', this.value)">
-        </div>
-        <div>
+        <input type="text" class="livro" value="${categoryData.livro}" oninput="saveCategories()">
+      </div>
+      <div>
         <label for="assunto">Assunto:</label>
-          <input type="text" id="assunto" value="${categoryData.assunto}" oninput="updateCategoryField('${categoryData.id}', 'assunto', this.value)">
-        </div>
-        <div>
-         
-      <label for="capitulo">Capitulo:</label>
-          <input type="text" id="capitulo" value="${categoryData.capitulo}" oninput="updateCategoryField('${categoryData.id}', 'capitulo', this.value)">
-        </div>
-        <div>
-
-      <label for="proximoEstudo">Proximo estudo:</label>
-          <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
-        </div>
-        <div>
-      <label for="dia">Dia:</label>
-          <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.id}', 'dia', this.value)">
-        </div>
-        <div>
-      <label for="horario">Horario:</label>
-          <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
-        </div>
-        
+        <input type="text" class="assunto" value="${categoryData.assunto}" oninput="saveCategories()">
+      </div>
+      <div>
+        <label for="capitulo">Capitulo:</label>
+        <input type="text" class="capitulo" value="${categoryData.capitulo}" oninput="saveCategories()">
+      </div>
+      <div>
+        <label for="proximoEstudo">Proximo estudo:</label>
+        <input type="text" class="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="saveCategories()">
+      </div>
+      <div>
+        <label for="dia">Dia:</label>
+        <input type="text" class="dia" value="${categoryData.dia}" oninput="saveCategories()">
+      </div>
+      <div>
+        <label for="horario">Horario:</label>
+        <input type="text" class="horario" value="${categoryData.horario}" oninput="formatHora(this)">
+      </div>
       <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
-      <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
+      <button onclick="redirectToWhatsApp(this)">Conversar</button>
     `;
 
-      categoriesContainer.appendChild(categoryDiv);
-    }
+    categoriesContainer.appendChild(categoryDiv);
+  }
 
-    function saveCategoriesPhoneNumber(input) {
-      const categoryDiv = input.parentElement;
-      const categoryId = categoryDiv.id;
-      updateCategoryField(categoryId, 'phoneNumber', input.value);
-    }
+  function confirmDeleteCategory(categoryId) {
+    categoryToDelete = categoryId;
+    deleteCategoryModal.style.display = 'block';
+  }
 
-    function confirmDeleteCategory(categoryId) {
-      categoryToDelete = categoryId;
-      deleteCategoryModal.style.display = 'block';
-    }
+  function closeDeleteCategoryModal() {
+    deleteCategoryModal.style.display = 'none';
+    categoryToDelete = null;
+  }
 
-    function closeDeleteCategoryModal() {
-      deleteCategoryModal.style.display = 'none';
-      categoryToDelete = null;
-    }
-
-    function confirmDelete() {
-      if (categoryToDelete) {
-        const categoryDiv = document.getElementById(categoryToDelete);
-        if (categoryDiv) {
-          categoryDiv.remove();
-          saveCategories();
-          checkEmptyCategories(); // Verifica se há categorias após excluir
-        }
+  function confirmDelete() {
+    if (categoryToDelete) {
+      const categoryDiv = document.getElementById(categoryToDelete);
+      if (categoryDiv) {
+        categoryDiv.remove();
+        saveCategories();
+        checkEmptyCategories(); // Verifica se há categorias após excluir
       }
-      closeDeleteCategoryModal();
     }
+    closeDeleteCategoryModal();
+  }
 
-    function updateCategoryField(categoryId, field, value) {
-      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-      const updatedCategories = savedCategories.map((category) => {
-        if (category.id === categoryId) {
-          category[field] = value;
-        }
-        return category;
-      });
+  function saveCategories() {
+    const categories = Array.from(categoriesContainer.children);
+    const categoriesData = categories.map((category) => ({
+      id: category.id,
+      name: category.querySelector('h3').textContent,
+      phoneNumber: category.querySelector('.phoneNumber').value,
+      livro: category.querySelector('.livro').value,
+      assunto: category.querySelector('.assunto').value,
+      capitulo: category.querySelector('.capitulo').value,
+      proximoEstudo: category.querySelector('.proximoEstudo').value,
+      dia: category.querySelector('.dia').value,
+      horario: category.querySelector('.horario').value,
+    }));
 
-      localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
-      saveCategories();
+    localStorage.setItem(storageKey, JSON.stringify(categoriesData));
+    checkEmptyCategories();
+  }
+
+  function checkEmptyCategories() {
+    const categories = categoriesContainer.children;
+    if (categories.length === 0) {
+      emptyMessage.style.display = 'block';
+    } else {
+      emptyMessage.style.display = 'none';
     }
+  }
 
-    function saveCategories() {
-      const categories = Array.from(categoriesContainer.children);
-      const categoriesData = categories.map((category) => ({
-        id: category.id,
-        name: category.querySelector('h3').textContent,
-        phoneNumber: category.querySelector('input[type="number"]').value,
-        livro: category.querySelector('#livro').value,
-        assunto: category.querySelector('#assunto').value,
-        capitulo: category.querySelector('#capitulo').value,
-        proximoEstudo: category.querySelector('#proximoEstudo').value,
-        dia: category.querySelector('#dia').value,
-        horario: category.querySelector('#horario').value,
-      }));
+  function redirectToWhatsApp(button) {
+    const categoryDiv = button.parentElement;
+    const categoryId = categoryDiv.id;
+    const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+    const categoryData = savedCategories.find(category => category.id === categoryId);
 
-      localStorage.setItem(storageKey, JSON.stringify(categoriesData));
-      checkEmptyCategories();
-    }
-
-    function checkEmptyCategories() {
-      const categories = categoriesContainer.children;
-      if (categories.length === 0) {
-        emptyMessage.style.display = 'block';
+    if (categoryData) {
+      const phoneNumber = categoryData.phoneNumber;
+      if (phoneNumber) {
+        window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
       } else {
-        emptyMessage.style.display = 'none';
+        showAlert("Por favor, adicione o número do estudante.");
       }
     }
+  }
 
-    function redirectToWhatsApp(button) {
-      const categoryDiv = button.parentElement;
-      const categoryId = categoryDiv.id;
-      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
-      const categoryData = savedCategories.find(category => category.id === categoryId);
+  function showAlert(message) {
+    const whatsappAlert = document.getElementById('whatsappAlert');
+    whatsappAlert.textContent = message;
+    whatsappAlert.style.display = 'block';
+    setTimeout(() => {
+      whatsappAlert.style.display = 'none';
+    }, 3000);  // Esconde o alerta após 3 segundos
+  }
 
-      if (categoryData) {
-        const phoneNumber = categoryData.phoneNumber;
-        if (phoneNumber) {
-          window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-        } else {
-          showAlert("Por favor, adicione o número do estudante.");
-        }
-      }
-    }
+  function searchCategories() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const categories = categoriesContainer.children;
+    let found = false;
 
-    function showAlert(message) {
-      const whatsappAlert = document.getElementById('whatsappAlert');
-      whatsappAlert.textContent = message;
-      whatsappAlert.style.display = 'block';
-      setTimeout(() => {
-        whatsappAlert.style.display = 'none';
-      }, 3000);  // Esconde o alerta após 3 segundos
-    }
+    for (let i = 0; i < categories.length; i++) {
+      const category = categories[i];
+      const categoryName = category.querySelector('h3').textContent.toLowerCase();
 
-    function searchCategories() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const categories = categoriesContainer.children;
-      let found = false;
-
-      for (let i = 0; i < categories.length; i++) {
-        const category = categories[i];
-        const categoryName = category.querySelector('h3').textContent.toLowerCase();
-
-        if (categoryName.includes(searchTerm)) {
-          category.style.display = 'block';
-          found = true;
-        } else {
-          category.style.display = 'none';
-        }
-      }
-
-      if (!found) {
-        customAlert.style.display = 'block'; // Exibe o alerta personalizado
+      if (categoryName.includes(searchTerm)) {
+        category.style.display = 'block';
+        found = true;
       } else {
-        customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
+        category.style.display = 'none';
       }
     }
 
-    function formatHora(input) {
-      const hora = input.value;
-      if (hora.length === 2 && hora.indexOf(':') === -1) {
-        input.value = hora + ':00';
-      }
-      saveCategories();
+    if (!found) {
+      customAlert.style.display = 'block'; // Exibe o alerta personalizado
+    } else {
+      customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
     }
+  }
 
-    function saveHorario() {
-      const horarioInput = document.getElementById("horario");
-      const horario = horarioInput.value;
-      localStorage.setItem("horario", horario);
+  function formatHora(input) {
+    const hora = input.value;
+    if (hora.length === 2 && hora.indexOf(':') === -1) {
+      input.value = hora + ':00';
     }
+    saveCategories();
+  }
 
-    function loadHorario() {
-      const horarioSaved = localStorage.getItem("horario");
-      if (horarioSaved) {
-        document.getElementById("horario").value = horarioSaved;
-      }
+  function saveHorario() {
+    const horarioInput = document.querySelector(".horario");
+    const horario = horarioInput.value;
+    localStorage.setItem("horario", horario);
+  }
+
+  function loadHorario() {
+    const horarioSaved = localStorage.getItem("horario");
+    if (horarioSaved) {
+      document.querySelector(".horario").value = horarioSaved;
     }
+  }
 
-    document.getElementById("horario").addEventListener("input", formatHora);
-    loadHorario();
-  </script>
+  document.querySelector(".horario").addEventListener("input", formatHora);
+  loadHorario();
+</script>
 </body>
 </html>
+
