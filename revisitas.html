@@ -1,0 +1,550 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Gerenciador de Categorias</title>
+  
+<style>
+ body {
+ font-family: Arial, sans-serif;
+ background-color: #f4f4f4;
+ margin: 0;
+      
+ }
+
+ .arrow {
+ display: inline-block;
+ width: 10px;
+ height: 10px;
+ border-top: 2px solid black;
+ border-right: 2px solid black;
+ transform: rotate(-130deg);
+ position: absolute;
+ top: 21px;
+ left: 15px;
+
+ }
+
+ header {
+ background: orange;
+ Padding: 15px;
+
+ }
+
+.logo {
+ margin: 0;
+ margin-top: 0px;
+ font-size: 22px;
+ font-weight: bold;
+ color: black;
+ text-align: center;
+    
+ }
+
+ button {
+ background-color: #4CAF50;
+ color: white;
+ border: none;
+ padding: 10px 20px;
+ margin: 10px;
+ cursor: pointer;
+ border-radius: 5px;
+    
+ }
+
+ button:hover {
+ background-color: #45a049;
+    
+ }
+
+ butão {
+ background-color: #4CAF50;
+ color: white;
+ border: none;
+ padding: 4px 10px;
+ margin: 10px;
+ margin-left: 50%;
+ cursor: pointer;
+ border-radius: 5px;
+    
+ }
+ 
+
+ #searchCategory {
+  padding: 12px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+ }
+ 
+
+ .category label {
+ display: block;
+ font-weight: bold;
+ margin-bottom: 5px;
+    
+ }
+
+ 
+
+
+ .modal {
+ display: none;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ background-color: white;
+ padding: 40px;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ z-index: 1000;
+    
+ }
+
+ .modal h3 {
+ margin-top: 0;
+ color: black;
+ font-size: 17px;
+ text-align: center;
+
+ }
+
+ .modal .modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
+
+ .alert {
+ display: none;
+ position: fixed;
+ top: 130px;
+ left: 60%;
+ transform: translateX(-50%);
+ background-color: #f44336;
+ color: white;
+ padding: 10px;
+ border-radius: 5px;
+ z-index: 1000;
+    
+ }
+
+ .delete-modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
+  
+ #categoriesContainer > div {
+ border: 1px solid silver;
+ border-radius: 5px;
+ position: center;
+ flex-wrap: wrap;
+ padding: 10px;
+ background: white;
+ border-radius: 5px;
+ margin-bottom: 22px;
+ box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+ margin-left: 5px;   
+ width: 91%; /* Ocupa 100% da largura disponível */
+ margin-top: 20px;
+
+ }
+
+ #addCategory {
+ background-color: orange;
+ color: black;
+ padding: 12px 20px;
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ margin-left: 15px;
+ margin-top: 20px;
+ margin-bottom: 40px;
+ font-size: 15px;
+ font-weight: bold;
+      
+ }
+
+ #addCategory:hover {
+ background-color: orange;
+        
+ }
+   
+ #categoriesContainer > div h3 {
+ font-size: 22px;
+ margin-left: 0px;
+ margin-top: 1px;
+ color: orange ;
+ border-bottom: nonepx solid #cc1;
+  
+ }
+
+ input[type="number"] {
+ width: 40%;
+ margin-top: 1px;
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ margin-bottom: 35px;
+ margin-left: 0px;
+      
+ }
+
+ .delete-button {
+ color: #f00;
+ cursor: pointer;
+ font-size: 15px;
+ font-weight: bold;
+ margin-left: 10px;
+      
+ }
+
+ .delete-button:hover {
+ text-decoration: underline;
+      
+ }
+
+ button:hover {
+ background-color: #none;
+    
+ }
+
+  
+ label {
+ margin-left: 0px;
+ color: black;
+ font-size: 16.50px;
+ font-weight: bold;
+  
+ }
+
+ #categoriesContainer> div input[type="text"] {
+ Padding: 10px;
+ width: 310px;
+ margin-left: 0px;
+ border: none;
+ border-radius: none;
+ font-size: 16px;
+ border-bottom: 1.50px solid #ccc;
+ margin-bottom: 30px;
+ color: black;
+
+ } 
+
+
+</style>
+</head>
+<body>
+ 
+ <a href="index.html">
+ <span class="arrow"></span>
+ </a>
+ </div>
+  
+ <header>
+ <div class="logo">Estudantes</div>
+ </header>
+
+ <button id="addCategory">Adicionar</button>
+  <input type="text" id="searchCategory" placeholder="Pesquisar revisita" oninput="searchCategories()">
+
+  <div id="categoriesContainer">
+    <p id="emptyMessage">Não há nada aqui</p>
+  </div>
+
+  <div class="alert" id="whatsappAlert">Para conversar, adicione o número do WhatsApp.</div>
+  <div class="alert" id="customAlert">Categoria não existe</div>
+
+  <div class="modal" id="addCategoryModal">
+    <h3>Adicionar estudante</h3>
+    <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
+    <div class="modal-buttons">
+      <button onclick="confirmAddCategory()">Adicionar</button>
+      <button onclick="closeCategoryModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="deleteCategoryModal">
+    <p>Deseja excluir esta categoria?</p>
+    <div class="delete-modal-buttons">
+      <button onclick="confirmDelete()">Sim</button>
+      <button onclick="closeDeleteCategoryModal()">Não</button>
+    </div>
+  </div>
+
+  <script>
+    // Função para gerar um identificador único
+    function generateUniqueId() {
+      return 'category_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Função para obter a chave da página
+    function pageKey() {
+      return 'pagina1';
+    }
+
+    // Use uma chave específica para esta página
+    const storageKey = `categories_${pageKey()}`;
+
+    const addButton = document.getElementById('addCategory');
+    const searchInput = document.getElementById('searchCategory');
+    const categoriesContainer = document.getElementById('categoriesContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const customAlert = document.getElementById('customAlert');
+    const addCategoryModal = document.getElementById('addCategoryModal');
+    const categoryNameInput = document.getElementById('categoryNameInput');
+    const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+    let categoryToDelete = null; // Armazena a categoria a ser excluída
+
+    // Carregar categorias do localStorage ao carregar a página
+    window.addEventListener('load', loadCategories);
+
+    addButton.addEventListener('click', showCategoryModal);
+
+    function loadCategories() {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
+      savedCategories.forEach((categoryData) => {
+        createCategory(categoryData);
+      });
+      checkEmptyCategories();
+    }
+
+    function showCategoryModal() {
+      addCategoryModal.style.display = 'block';
+      categoryNameInput.focus();
+    }
+
+    function closeCategoryModal() {
+      addCategoryModal.style.display = 'none';
+    }
+
+    function confirmAddCategory() {
+      const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
+      if (categoryName) {
+        const categoryData = {
+          id: generateUniqueId(),
+          name: categoryName,
+          nome: "",
+          publicacões: "",
+          conversa: "",
+          proximoEstudo: "",
+          dia: "",
+          horario: "",
+          endereco: "",
+          casa: "",
+          phoneNumber: ""
+        };
+
+        createCategory(categoryData);
+        saveCategories();
+        closeCategoryModal();
+        categoryNameInput.value = '';
+      }
+    }
+
+    function createCategory(categoryData) {
+      // Remove a mensagem "Não há nada aqui" se existir
+      if (emptyMessage) {
+        emptyMessage.style.display = 'none';
+      }
+
+      const categoryDiv = document.createElement('div');
+      categoryDiv.id = categoryData.id;
+      categoryDiv.className = 'category';
+      categoryDiv.innerHTML = `
+        <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
+        <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
+        <!-- Resto do seu código HTML aqui -->
+        <div>
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" value="${categoryData.nome}" oninput="updateCategoryField('${categoryData.id}', 'nome', this.value)">
+        </div>
+        <div>
+          <label for="publicacões">Publicações:</label>
+          <input type="text" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
+        </div>
+        <div>
+          <label for="conversa">Primeira conversa:</label>
+          <input type="text" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
+        </div>
+        <div>
+          <label for="proximoEstudo">Proxima conversa:</label>
+          <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
+        </div>
+        <div>
+          <label for="dia">Dia:</label>
+          <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.id}', 'dia', this.value)">
+        </div>
+        <div>
+          <label for="horario">Horario:</label>
+          <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
+        </div>
+        <div>
+          <label for="endereco">Endereço:</label>
+          <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.id}', 'endereco', this.value)">
+        </div>
+        <div>
+          <label for="casa">Ponto de referência:</label>
+          <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.id}', 'casa', this.value)">
+        </div>
+        <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
+        <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
+      `;
+
+      categoriesContainer.appendChild(categoryDiv);
+    }
+
+    function saveCategoriesPhoneNumber(input) {
+      const categoryDiv = input.parentElement;
+      const categoryId = categoryDiv.id;
+      updateCategoryField(categoryId, 'phoneNumber', input.value);
+    }
+
+    function confirmDeleteCategory(categoryId) {
+      categoryToDelete = categoryId;
+      deleteCategoryModal.style.display = 'block';
+    }
+
+    function closeDeleteCategoryModal() {
+      deleteCategoryModal.style.display = 'none';
+      categoryToDelete = null;
+    }
+
+    function confirmDelete() {
+      if (categoryToDelete) {
+        const categoryDiv = document.getElementById(categoryToDelete);
+        if (categoryDiv) {
+          categoryDiv.remove();
+          saveCategories();
+          checkEmptyCategories(); // Verifica se há categorias após excluir
+        }
+      }
+      closeDeleteCategoryModal();
+    }
+
+    function updateCategoryField(categoryId, field, value) {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const updatedCategories = savedCategories.map((category) => {
+        if (category.id === categoryId) {
+          category[field] = value;
+        }
+        return category;
+      });
+
+      localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
+      saveCategories();
+    }
+
+    function saveCategories() {
+      const categories = Array.from(categoriesContainer.children);
+      const categoriesData = categories.map((category) => ({
+        id: category.id,
+        name: category.querySelector('h3').textContent,
+        phoneNumber: category.querySelector('input[type="number"]').value,
+        nome: category.querySelector('#nome').value,
+        publicacões: category.querySelector('#publicacões').value,
+        conversa: category.querySelector('#conversa').value,
+        proximoEstudo: category.querySelector('#proximoEstudo').value,
+        dia: category.querySelector('#dia').value,
+        horario: category.querySelector('#horario').value,
+        endereco: category.querySelector('#endereco').value,
+        casa: category.querySelector('#casa').value,
+      }));
+
+      localStorage.setItem(storageKey, JSON.stringify(categoriesData));
+      checkEmptyCategories();
+    }
+
+    function checkEmptyCategories() {
+      const categories = categoriesContainer.children;
+      if (categories.length === 0) {
+        emptyMessage.style.display = 'block';
+      } else {
+        emptyMessage.style.display = 'none';
+      }
+    }
+
+    function redirectToWhatsApp(button) {
+      const categoryDiv = button.parentElement;
+      const categoryId = categoryDiv.id;
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const categoryData = savedCategories.find(category => category.id === categoryId);
+
+      if (categoryData) {
+        const phoneNumber = categoryData.phoneNumber;
+        if (phoneNumber) {
+          window.location.href = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+        } else {
+          showAlert("Por favor, adicione o número do estudante.");
+        }
+      }
+    }
+
+    function showAlert(message) {
+      const whatsappAlert = document.getElementById('whatsappAlert');
+      whatsappAlert.textContent = message;
+      whatsappAlert.style.display = 'block';
+      setTimeout(() => {
+        whatsappAlert.style.display = 'none';
+      }, 3000);  // Esconde o alerta após 3 segundos
+    }
+
+    function searchCategories() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const categories = categoriesContainer.children;
+      let found = false;
+
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+        const categoryName = category.querySelector('h3').textContent.toLowerCase();
+
+        if (categoryName.includes(searchTerm)) {
+          category.style.display = 'block';
+          found = true;
+        } else {
+          category.style.display = 'none';
+        }
+      }
+
+      if (!found) {
+        customAlert.style.display = 'block'; // Exibe o alerta personalizado
+      } else {
+        customAlert.style.display = 'none'; // Oculta o alerta se houver categorias encontradas
+      }
+    }
+
+    function formatHora(input) {
+      const hora = input.value;
+      if (hora.length === 2 && hora.indexOf(':') === -1) {
+        input.value = hora + ':00';
+      }
+      saveCategories();
+    }
+
+    function saveHorario() {
+      const horarioInput = document.getElementById("horario");
+      const horario = horarioInput.value;
+      localStorage.setItem("horario", horario);
+    }
+
+    function loadHorario() {
+      const horarioSaved = localStorage.getItem("horario");
+      if (horarioSaved) {
+        document.getElementById("horario").value = horarioSaved;
+      }
+    }
+
+    document.getElementById("horario").addEventListener("input", formatHora);
+    loadHorario();
+  </script>
+</body>
+</html>
