@@ -1,0 +1,526 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Gerenciador de Categorias</title>
+  
+<style>
+       
+ body {
+ margin: 0;
+ font-family: Arial, sans-serif;
+
+ }
+
+ .arrow {
+ display: inline-block;
+ width: 10px;
+ height: 10px;
+ border-top: 2px solid orange;
+ border-right: 2px solid orange;
+ transform: rotate(-130deg);
+ position: absolute;
+ top: 24px;
+ left: 15px;
+        
+ }
+
+        
+ header {
+ background-color: #13294b;
+ padding: 18px;
+ border-bottom: 1.50px solid White;
+        
+ }
+
+ .logo {
+ color: white;
+ text-align: center;
+ font-size: 20px;
+ font-weight: bold;
+        
+ }
+
+ 
+ label {
+ display: inline-block;
+ width: 150px;
+ font-weight: bold;
+ color: navy;
+ margin-left: 15px;
+ margin-top: 30px;
+          
+ }
+
+ input[type="text"] {
+ width: 200px;
+ padding: 10px;
+ margin-top: 5px;
+ border-radius: 10px;
+ border-color: #cc1;
+ font-size: 16px;
+ border: 1px solid #ccc;
+ margin-left: 10px;
+ 
+ }
+
+  
+ input {
+ color: black;
+ margin-left: 0px;
+           
+ }
+  
+ 
+ textarea#notes {
+ width: 94%;
+ height: 500px;
+ font-size: 16px;
+ border: 1px solid #ddd;
+ border-radius: 0px;
+ resize: vertical;
+ margin-left: 0px;
+ padding: 10px;
+ margin-bottom: 20px;
+ 
+ }
+
+
+ button {
+ background-color: white;
+ color: navy;
+ border: none;
+ padding: 5px 5px;
+ margin: 10px;
+ cursor: pointer;
+ border-radius: none;
+ font-weight: bold;
+
+ }
+ 
+ button:hover {
+ background-color: none;
+    
+ }
+
+ butão {
+ background-color: #13294b;
+ color: white;
+ border: none;
+ padding: 4px 10px;
+ margin-top: 30px;
+ margin-left: 210px;
+ border-radius: 5px;
+    
+ }
+ 
+
+ .modal {
+ display: none;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ background-color: white;
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ z-index: 1000;
+    
+ }
+
+ .modal h3 {
+ margin-top: 0;
+ color: black;
+ font-size: 17px;
+ text-align: center;
+
+ }
+
+ .modal .modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
+
+ .alert {
+ display: none;
+ position: fixed;
+ top: 130px;
+ left: 60%;
+ transform: translateX(-50%);
+ background-color: lime;
+ color: white;
+ padding: 10px;
+ border-radius: 5px;
+ z-index: 1000;
+    
+ }
+
+ .delete-modal-buttons {
+ display: flex;
+ justify-content: space-between;
+ margin-top: 10px;
+    
+ }
+  
+ #categoriesContainer > div {
+ border: 1px solid silver;
+ border-radius: 5px;
+ position: center;
+ flex-wrap: wrap;
+ padding: 1px;
+ background: white;
+ border-radius: 5px;
+ margin-bottom: 22px;
+ box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+ margin-left: 5px;   
+ width: 96%; /* Ocupa 100% da largura disponível */
+ margin-top: 20px;
+ height: 630px; /* Ajuste a altura conforme necessário */
+    
+ }
+
+
+ #addCategory {
+ background-color: orange;
+ color: black;
+ padding: 5px 10px;
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ margin-left: 120px;
+ margin-top: 0px;
+ margin-bottom: 40px;
+ font-size: 15px;
+ font-weight: bold;
+      
+ }
+
+ #addCategory:hover {
+ background-color: orange;
+        
+ }
+   
+ #categoriesContainer > div h3 {
+ font-size: 22px;
+ margin-left: 10px;
+ margin-top: 5px;
+ color: #13294b;
+ border-bottom: nonepx solid #cc1;
+  
+ }
+
+ input[type="number"] {
+ width: 40%;
+ margin-top: 1px;
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ margin-bottom: 35px;
+ margin-left: 0px;
+      
+ }
+
+ .delete-button {
+ color: #4CAF50;
+ cursor: pointer;
+ font-size: 15px;
+ font-weight: bold;
+ margin-left: 10px;
+ 
+ }
+
+ .delete-button:hover {
+ text-decoration: underline;
+      
+ }
+
+ button:hover {
+ background-color: #none;
+    
+ }
+
+ #categoriesContainer> div input[type="text"] {
+ Padding: 10px;
+ width: 310px;
+ margin-left: 0px;
+ border: none;
+ border-radius: none;
+ font-size: 16px;
+ border-bottom: 1.50px solid #ccc;
+ margin-bottom: 30px;
+ color: black;
+
+ } 
+
+.line {
+ margin-top: 30px;
+ border-bottom: 1px solid #13294b;
+
+ }
+
+ p {
+ color: black;
+ font-size: 15px;
+ font-weight: none;
+ margin-left: 0px;
+ text-align: center;
+ }
+
+</style>
+</head>
+<body>
+
+ <a href="index.html">
+ <span class="arrow"></span>
+ </a>
+ </div>
+ <header>
+ <div class="logo">Minha designação</div>
+ </header>
+ </div>
+ </div>
+
+ <label for="nome">Designação:</label>
+ <input type="text" id="nome" name="nome"><br><br>
+
+ <label for="data">Data:</label>
+ <input type="text" id="data" name="data"><br><br>
+
+ <label for="texto">Texto da biblia:</label>
+ <input type="text" id="texto" name="texto"><br><br>
+
+ <label for="assunto">Assunto:</label>
+ <input type="text" id="assunto" name="assunto"><br><br>
+
+ <label for="ajudante">Ajudante:</label>
+ <input type="text" id="ajudante" name="ajudante"><br><br>
+ </form>
+ </div>
+ </div>
+
+ <div class="line">
+ </div>
+ </div>
+
+ <p>Tem ajundante? Crie um assunto agora.</p>
+
+ <button id="addCategory">Criar assunto</button>
+
+ <div id="categoriesContainer">
+    <p id="emptyMessage">Não há nada aqui</p>
+ </div>
+
+ <div class="alert" id="customAlert">Categoria não existe</div>
+
+  <div class="modal" id="addCategoryModal">
+    
+    <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
+    <div class="modal-buttons">
+      <button onclick="confirmAddCategory()">Adicionar</button>
+      <button onclick="closeCategoryModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="deleteCategoryModal">
+    <p>Deseja excluir esta categoria?</p>
+    <div class="delete-modal-buttons">
+      <button onclick="confirmDelete()">Sim</button>
+      <button onclick="closeDeleteCategoryModal()">Não</button>
+    </div>
+  </div>
+
+  <script>
+    // Função para gerar um identificador único
+    function generateUniqueId() {
+      return 'category_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Função para obter a chave da página
+    function pageKey() {
+      return 'pagina4';
+    }
+
+    // Use uma chave específica para esta página
+    const storageKey = `categories_${pageKey()}`;
+
+    const addButton = document.getElementById('addCategory');
+    const categoriesContainer = document.getElementById('categoriesContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const customAlert = document.getElementById('customAlert');
+    const addCategoryModal = document.getElementById('addCategoryModal');
+    const categoryNameInput = document.getElementById('categoryNameInput');
+    const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+
+    let categoryToDelete = null; // Armazena a categoria a ser excluída
+
+    // Carregar categorias do localStorage ao carregar a página
+    window.addEventListener('load', loadCategories);
+
+    addButton.addEventListener('click', showCategoryModal);
+
+    function loadCategories() {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      categoriesContainer.innerHTML = ''; // Limpa o contêiner antes de recarregar
+      savedCategories.forEach((categoryData) => {
+        createCategory(categoryData);
+      });
+      checkEmptyCategories();
+    }
+
+    function showCategoryModal() {
+      addCategoryModal.style.display = 'block';
+      categoryNameInput.focus();
+    }
+
+    function closeCategoryModal() {
+      addCategoryModal.style.display = 'none';
+    }
+
+    function confirmAddCategory() {
+      const categoryName = categoryNameInput.value.trim(); // Remove espaços em branco no início e no fim
+      if (categoryName) {
+        const categoryData = {
+          id: generateUniqueId(),
+          name: categoryName,
+          notes: "" // Inicializar notes como string vazia
+        };
+
+        createCategory(categoryData);
+        saveCategories();
+        closeCategoryModal();
+        categoryNameInput.value = '';
+      }
+    }
+
+    function createCategory(categoryData) {
+      // Remove a mensagem "Não há nada aqui" se existir
+      if (emptyMessage) {
+        emptyMessage.style.display = 'none';
+      }
+
+      const categoryDiv = document.createElement('div');
+      categoryDiv.id = categoryData.id;
+      categoryDiv.className = 'category';
+      categoryDiv.innerHTML = `
+        <h3 contenteditable="true" oninput="saveCategories()">${categoryData.name}</h3>
+        <div>
+        <textarea id="notes" oninput="updateCategoryField('${categoryData.id}', 'notes', this.value)" placeholder="Digite seu texto aqui...">${categoryData.notes}</textarea>
+        </div>
+        <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
+        <butão onclick="sendToWhatsApp('${categoryData.id}')">Enviar</butão>
+      `;
+
+      categoriesContainer.appendChild(categoryDiv);
+    }
+
+    function confirmDeleteCategory(categoryId) {
+      categoryToDelete = categoryId;
+      deleteCategoryModal.style.display = 'block';
+    }
+
+    function closeDeleteCategoryModal() {
+      deleteCategoryModal.style.display = 'none';
+      categoryToDelete = null;
+    }
+
+    function confirmDelete() {
+      if (categoryToDelete) {
+        const categoryDiv = document.getElementById(categoryToDelete);
+        if (categoryDiv) {
+          categoryDiv.remove();
+          saveCategories();
+          checkEmptyCategories(); // Verifica se há categorias após excluir
+        }
+      }
+      closeDeleteCategoryModal();
+    }
+
+    function updateCategoryField(categoryId, field, value) {
+      const savedCategories = JSON.parse(localStorage.getItem(storageKey)) || [];
+      const updatedCategories = savedCategories.map((category) => {
+        if (category.id === categoryId) {
+          category[field] = value;
+        }
+        return category;
+      });
+
+      localStorage.setItem(storageKey, JSON.stringify(updatedCategories));
+      saveCategories();
+    }
+
+    function saveCategories() {
+      const categories = Array.from(categoriesContainer.children);
+      const categoriesData = categories.map((category) => ({
+        id: category.id,
+        name: category.querySelector('h3').textContent,
+        notes: category.querySelector('#notes').value
+      }));
+
+      localStorage.setItem(storageKey, JSON.stringify(categoriesData));
+      checkEmptyCategories();
+    }
+
+    function checkEmptyCategories() {
+      const categories = categoriesContainer.children;
+      if (categories.length === 0) {
+        emptyMessage.style.display = 'block';
+      } else {
+        emptyMessage.style.display = 'none';
+      }
+    }
+
+    function sendToWhatsApp(categoryId) {
+      const categoryDiv = document.getElementById(categoryId);
+      const categoryName = categoryDiv.querySelector('h3').textContent;
+      const notes = categoryDiv.querySelector('#notes').value;
+      const message = `Nome: ${categoryName}\nNotas: ${notes}`;
+      const encodedMessage = encodeURIComponent(message);
+
+      window.location.href = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+    }
+  </script>
+
+
+
+
+
+
+<script>
+    // Carregar informações salvas no localStorage
+    document.getElementById("nome").value = localStorage.getItem("nome") || "";
+    document.getElementById("data").value = localStorage.getItem("data") || "";
+    document.getElementById("texto").value = localStorage.getItem("texto") || "";
+    document.getElementById("assunto").value = localStorage.getItem("assunto") || "";
+    document.getElementById("ajudante").value = localStorage.getItem("ajudante") || "";
+
+    // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
+    document.getElementById("nome").addEventListener("input", function () {
+        localStorage.setItem("nome", this.value);
+    });
+
+    document.getElementById("data").addEventListener("input", function () {
+        localStorage.setItem("data", this.value);
+    });
+
+    document.getElementById("texto").addEventListener("input", function () {
+        localStorage.setItem("texto", this.value);
+    });
+
+    document.getElementById("assunto").addEventListener("input", function () {
+        localStorage.setItem("assunto", this.value);
+    });
+
+    document.getElementById("ajudante").addEventListener("input", function () {
+        localStorage.setItem("ajudante", this.value);
+    });
+</script>
+</body>
+</html>
+
+
+
