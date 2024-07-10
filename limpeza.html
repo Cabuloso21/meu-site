@@ -1,0 +1,139 @@
+ 
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Exemplo de Grid Flexível</title>
+ <link rel="stylesheet" href="styles.css">
+ </head>
+ <body>
+ 
+ 
+<style>
+  body { 
+  margin: 0px;
+  font-family: Arial, sans-serif;
+   
+ }
+  .arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid orange;
+  border-right: 2px solid orange;
+  transform: rotate(-130deg);
+  position: absolute;
+  top: 21px;
+  left: 15px;
+        
+ }
+
+      
+  header {
+  background-color: #13294b;
+  padding: 15px;
+  border-bottom: 1.50px solid White;
+        
+ }
+
+  .title {
+  color: white;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+        
+ }
+
+  form {
+  margin: 20px;
+       
+ }
+
+  label {
+  display: inline-block;
+  width: 150px;
+  font-weight: bold;
+  color: #13294b;
+  margin: 6px;
+            
+ }
+
+  input[type="text"] {
+  width: 200px;
+  padding: 14px;
+  margin-bottom: 6px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+          
+ }
+
+  input {
+  color: black;
+         
+ }
+  
+  
+ footer {
+ background-color: #555;
+ padding: 5px;
+ margin-top: 48%;
+ border-bottom: 1px solid white; 
+        
+ }
+  
+ .brand p {
+ font-size: 14px;
+ color: silver;
+ text-align: absolute;
+ margin-left: 10px;
+        
+ }
+ </style>
+
+ </head>
+ <body>
+
+ <a href="index.html">
+ <span class="arrow"></span>
+ </a>
+ </div>
+
+
+ <header>
+ <div class="title">Limpeza do salão</div>
+ </header>
+ </div>
+ 
+<form>
+  <label for="nome">Dia da limpeza:</label>
+  <input type="text" id="nome" name="nome"><br><br>
+
+  <label for="grupo">Grupo:</label>
+  <input type="text" id="grupo" name="grupo"><br><br>
+</form>
+
+</div>
+</div>
+<footer>
+ <div class="brand">
+ <p>&copy;2024°-Publicadores - todos os direitos reservados.</p>
+ </div>
+ </footer>
+
+
+<script>
+  // Carregar informações salvas no localStorage
+  document.getElementById("nome").value = localStorage.getItem("nome") || "";
+  document.getElementById("grupo").value = localStorage.getItem("grupo") || "";
+  
+  // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
+  document.getElementById("nome").addEventListener("input", function () {
+      localStorage.setItem("nome", this.value);
+  });
+
+  document.getElementById("grupo").addEventListener("input", function () {
+      localStorage.setItem("grupo", this.value);
+  });
+</script>
