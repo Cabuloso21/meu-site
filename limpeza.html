@@ -1,16 +1,13 @@
- 
- <!DOCTYPE html>
- <html lang="en">
- <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Exemplo de Grid Flexível</title>
- <link rel="stylesheet" href="styles.css">
- </head>
- <body>
- 
- 
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pregação</title>
+</head>
+<body>
+  
+ <style>
   body { 
   margin: 0px;
   font-family: Arial, sans-serif;
@@ -73,12 +70,11 @@
   color: black;
          
  }
-  
-  
+    
  footer {
  background-color: #555;
- padding: 5px;
- margin-top: 48%;
+ padding: 1px;
+ margin-top: 50%;
  border-bottom: 1px solid white; 
         
  }
@@ -87,53 +83,82 @@
  font-size: 14px;
  color: silver;
  text-align: absolute;
- margin-left: 10px;
+ margin-left: 17px;
         
  }
  </style>
-
  </head>
  <body>
-
+  
  <a href="admi.html">
  <span class="arrow"></span>
  </a>
  </div>
 
-
  <header>
- <div class="title">Limpeza do salão</div>
+ <div class="title">Limpeza</div>
  </header>
  </div>
+ </div>
  
-<form>
-  <label for="nome">Dia da limpeza:</label>
-  <input type="text" id="nome" name="nome"><br><br>
+ <form>
+ <label for="nome">Dia da limpeza:</label>
+ <input type="text" id="nome" name="nome"><br><br>
 
-  <label for="grupo">Grupo:</label>
-  <input type="text" id="grupo" name="grupo"><br><br>
-</form>
+ <label for="mes">Grupo:</label>
+ <input type="text" id="mes" name="mes" maxlength="5" placeholder="HH:MM"><br><br>
+ </form>
+ </div>
+ </div>
 
-</div>
-</div>
-<footer>
+ <footer>
  <div class="brand">
  <p>&copy;2024°-Publicadores - todos os direitos reservados.</p>
  </div>
  </footer>
-
+ </div>
+ </div>
 
 <script>
-  // Carregar informações salvas no localStorage
-  document.getElementById("nome").value = localStorage.getItem("nome") || "";
-  document.getElementById("grupo").value = localStorage.getItem("grupo") || "";
-  
-  // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
-  document.getElementById("nome").addEventListener("input", function () {
-      localStorage.setItem("nome", this.value);
-  });
+function pageKey() {
+  // Defina uma chave exclusiva para cada página
+  return 'pagina5';
+}
 
-  document.getElementById("grupo").addEventListener("input", function () {
-      localStorage.setItem("grupo", this.value);
-  });
+// Use a chave exclusiva para armazenar e recuperar informações no localStorage
+var uniqueKey = pageKey();
+
+// Carregar informações salvas no localStorage
+document.getElementById("nome").value = localStorage.getItem(uniqueKey + "_nome") || "";
+document.getElementById("mes").value = localStorage.getItem(uniqueKey + "_mes") || "";
+
+
+// Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
+document.getElementById("nome").addEventListener("input", function () {
+  localStorage.setItem(uniqueKey + "_nome", this.value);
+});
+
+document.getElementById("mes").addEventListener("input", function () {
+  localStorage.setItem(uniqueKey + "_mes", this.value);
+});
+
+
+// Função para formatar o horário
+function formatTime(input) {
+  let value = input.value.replace(/\D/g, '');
+
+  if (value.length >= 3) {
+    value = value.slice(0, 2) + ':' + value.slice(2, 4);
+  }
+
+  input.value = value;
+}
+
+document.getElementById("mes").addEventListener("input", function () {
+  formatTime(this);
+  localStorage.setItem(uniqueKey + "_mes", this.value);
+});
 </script>
+</body>
+</html>
+
