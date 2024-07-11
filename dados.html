@@ -16,13 +16,13 @@
  }
 
  header {
- background: orange;
+ background: #13294b;
  padding: 20px; 
     
  }
 
  .logo {
- color: black;
+ color: white;
  font-size: 25px;
  font-weight: bold;
  text-align: absolute;
@@ -87,7 +87,7 @@
 
  .text {
  color: black;
- font-size: 20px;
+ font-size: 18px;
  font-weight: bold;
  margin-top: 30px;
  text-align: center;
@@ -122,31 +122,24 @@
 
 </style>
 
-
-
-
- <header>
- <div class="logo">Lopixe</div>
+<header>
+ <div class="title">Meus dados</div>
  </header> 
  </div>
  </div>
  
- <div class="text">Meus dados</div>
- </div>
- </div>
-
  <div id="dados">
- <p>Email: <span id="email"></span></p>
+ <p>Usuário: <span id="email"></span></p>
  <p>Senha: <span id="senha"></span></p>
  </div>
  </div>
 
- <div class="text">Trocar email e senha</div>
+ <div class="text">Trocar Nome e senha do usuário</div>
  </div>
  </div>
   
  <div class="container">
- <input type="email" id="newEmail" placeholder="Digite seu novo email">
+ <input type="email" id="newEmail" placeholder="Digite seu novo nome ou email">
  <input type="password" id="newPassword" placeholder="Digite sua nova senha">
  <button onclick="updateUser()">Atualizar</button>
 
