@@ -70,7 +70,7 @@
   color: black;
          
  }
-    
+   
  footer {
  background-color: #555;
  padding: 1px;
@@ -96,28 +96,28 @@
  </div>
 
  <header>
- <div class="title">Limpeza</div>
+ <div class="title">Limpeza do salão</div>
  </header>
  </div>
  </div>
- 
- <form>
- <label for="nome">Dia da limpeza:</label>
- <input type="text" id="nome" name="nome"><br><br>
 
- <label for="mes">Grupo:</label>
- <input type="text" id="mes" name="mes" maxlength="5" placeholder="HH:MM"><br><br>
- </form>
- </div>
- </div>
+  <form>
+  <label for="nome">Dia da limpeza:</label>
+  <input type="text" id="nome" name="nome"><br><br>
 
- <footer>
- <div class="brand">
- <p>&copy;2024°-Publicadores - todos os direitos reservados.</p>
- </div>
- </footer>
- </div>
- </div>
+  <label for="mes">Grupo:</label>
+  <input type="text" id="mes" name="mes"><br><br>
+</form>
+</div>
+</div>
+
+<footer>
+  <div class="brand">
+    <p>&copy;2024°-Publicadores - todos os direitos reservados.</p>
+  </div>
+</footer>
+</div>
+</div>
 
 <script>
 function pageKey() {
@@ -132,7 +132,6 @@ var uniqueKey = pageKey();
 document.getElementById("nome").value = localStorage.getItem(uniqueKey + "_nome") || "";
 document.getElementById("mes").value = localStorage.getItem(uniqueKey + "_mes") || "";
 
-
 // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
 document.getElementById("nome").addEventListener("input", function () {
   localStorage.setItem(uniqueKey + "_nome", this.value);
@@ -141,24 +140,10 @@ document.getElementById("nome").addEventListener("input", function () {
 document.getElementById("mes").addEventListener("input", function () {
   localStorage.setItem(uniqueKey + "_mes", this.value);
 });
-
-
-// Função para formatar o horário
-function formatTime(input) {
-  let value = input.value.replace(/\D/g, '');
-
-  if (value.length >= 3) {
-    value = value.slice(0, 2) + ':' + value.slice(2, 4);
-  }
-
-  input.value = value;
-}
-
-document.getElementById("mes").addEventListener("input", function () {
-  formatTime(this);
-  localStorage.setItem(uniqueKey + "_mes", this.value);
-});
 </script>
 </body>
 </html>
+
+
+
 
