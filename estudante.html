@@ -44,8 +44,8 @@
  }
 
  button {
- background-color: #4CAF50;
- color: white;
+ background-color: white;
+ color: #13294b;
  border: none;
  padding: 10px 20px;
  margin: 10px;
@@ -55,7 +55,7 @@
  }
 
  button:hover {
- background-color: #45a049;
+ background-color: #13294b;
     
  }
 
@@ -388,7 +388,7 @@
         <input type="text" class="horario" value="${categoryData.horario}" oninput="formatHora(this)">
       </div>
       <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
-      <button onclick="redirectToWhatsApp(this)">Conversar</button>
+      <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
     `;
 
     categoriesContainer.appendChild(categoryDiv);
