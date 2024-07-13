@@ -75,7 +75,7 @@
  #searchCategory {
   padding: 12px;
   margin-left: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid lime;
   border-radius: 4px;
   background: white;
  }
@@ -407,31 +407,31 @@ footer {
         </div>
         <div>
           <label for="publicacões">Publicações:</label>
-          <input type="text" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
+          <input type="name" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
         </div>
         <div>
           <label for="conversa">Primeira conversa:</label>
-          <input type="text" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
+          <input type="name" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
         </div>
         <div>
           <label for="proximoEstudo">Proxima conversa:</label>
-          <input type="text" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
+          <input type="name" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
         </div>
         <div>
           <label for="dia">Dia:</label>
-          <input type="text" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.id}', 'dia', this.value)">
+          <input type="name" id="dia" value="${categoryData.dia}" oninput="updateCategoryField('${categoryData.id}', 'dia', this.value)">
         </div>
         <div>
           <label for="horario">Horario:</label>
-          <input type="text" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
+          <input type="name" id="horario" value="${categoryData.horario}" oninput="formatHora(this)">
         </div>
         <div>
           <label for="endereco">Endereço:</label>
-          <input type="text" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.id}', 'endereco', this.value)">
+          <input type="name" id="endereco" value="${categoryData.endereco}" oninput="updateCategoryField('${categoryData.id}', 'endereco', this.value)">
         </div>
         <div>
           <label for="casa">Ponto de referência:</label>
-          <input type="text" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.id}', 'casa', this.value)">
+          <input type="name" id="casa" value="${categoryData.casa}" oninput="updateCategoryField('${categoryData.id}', 'casa', this.value)">
         </div>
         <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
         <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
