@@ -392,27 +392,27 @@ footer {
       <!-- Resto do seu código HTML aqui -->
       <div>
         <label for="livro">Livro de estudo:</label>
-        <input type="text" class="livro" value="${categoryData.livro}" oninput="saveCategories()">
+        <input type="name" class="livro" value="${categoryData.livro}" oninput="saveCategories()">
       </div>
       <div>
         <label for="assunto">Assunto:</label>
-        <input type="text" class="assunto" value="${categoryData.assunto}" oninput="saveCategories()">
+        <input type="name" class="assunto" value="${categoryData.assunto}" oninput="saveCategories()">
       </div>
       <div>
         <label for="capitulo">Capitulo:</label>
-        <input type="text" class="capitulo" value="${categoryData.capitulo}" oninput="saveCategories()">
+        <input type="name" class="capitulo" value="${categoryData.capitulo}" oninput="saveCategories()">
       </div>
       <div>
         <label for="proximoEstudo">Proximo estudo:</label>
-        <input type="text" class="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="saveCategories()">
+        <input type="name" class="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="saveCategories()">
       </div>
       <div>
         <label for="dia">Dia:</label>
-        <input type="text" class="dia" value="${categoryData.dia}" oninput="saveCategories()">
+        <input type="name" class="dia" value="${categoryData.dia}" oninput="saveCategories()">
       </div>
       <div>
         <label for="horario">Horario:</label>
-        <input type="text" class="horario" value="${categoryData.horario}" oninput="formatHora(this)">
+        <input type="name" class="horario" value="${categoryData.horario}" oninput="formatHora(this)">
       </div>
       <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
       <butão onclick="redirectToWhatsApp(this)">Conversar</butão>
