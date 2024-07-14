@@ -38,7 +38,16 @@
 
 }
 
-  
+  .nome {
+    color: lime;
+    font-size: 20px;
+    font-weight: bold;
+  }
+   .senha {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+  }
 
   .text {
     color: black;
@@ -101,8 +110,10 @@
 </div>
   
 <div class="container">
- <input type="email" id="email" placeholder="Digite um nome ou email">
- <input type="password" id="newPassword" placeholder="Digite uma senha">
+<div class="nome">Nome ou E-mail</div>
+  <input type="email" id="email" placeholder="Digite um nome ou email">
+<div class="senha">Senha</div>
+  <input type="password" id="newPassword" placeholder="Digite uma senha">
  <button onclick="register()">Cadastrar</button>
 
 <p id="message"></p>
