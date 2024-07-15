@@ -67,7 +67,7 @@ margin-bottom: 135px;
  button {
   width: 30%;
   padding: 0.75rem;
-  background-color: orange;
+  background-color: #ccc;
   border: none;
   border-radius: 5px;
   color: black;
@@ -80,7 +80,7 @@ margin-bottom: 135px;
 }
 
 button:hover {
-  background-color: orange;
+  background-color: #ccc;
 }
 
 
@@ -282,6 +282,28 @@ button:hover {
             showNotification('Importante: Ao criar sua conta, Lembre-se da senha e do usuário, pois ela será usada para que você possa acessar sua conta de administrador. Se você esquecer dela, não será possível recuperá-la.', false);
         }
     </script>
+
+
+
+
+
+<script>
+document.getElementById('terms').addEventListener('change', function() {
+  document.getElementById('loginButton').disabled = !this.checked;
+});
+
+function login() {
+  if (!document.getElementById('terms').checked) {
+    alert('Você deve aceitar os termos de uso antes de fazer login.');
+    return false;
+  }
+
+  // Continue com o processo de login
+  alert('Login bem-sucedido!');
+}
+</script>
+
+
 </body>
 </html>
 
