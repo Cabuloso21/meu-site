@@ -182,85 +182,11 @@ button:disabled {
   </header>
 </div>
 </div>
+
 <div class="text">Cadastre-se</div>
 </div>
 </div>
   
-    /* Estilos da caixa de termos */
-.terms-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.terms-container input[type="checkbox"] {
-  margin-right: 0.5rem;
-}
-
-.terms-container a {
-  color: #007BFF;
-  text-decoration: none;
-}
-
-.terms-container a:hover {
-  text-decoration: underline;
-}
-
-/* Estilos do botão */
-button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007BFF;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-/* Estilos da notificação */
-#notification {
-  display: none;
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 1rem;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 300px;
-}
-
-#notification.error {
-  border-color: #ff0000;
-}
-
-#closeNotification {
-  float: right;
-  cursor: pointer;
-}
-
-#notificationMessage {
-  display: block;
-  margin-top: 0.5rem;
-}
-
-</style>
-
-
-
-<div class="text">Cadastre-se</div>
-
 <div id="notification">
   <span id="closeNotification">X</span>
   <span id="notificationMessage">Mensagem de notificação automática!</span>
@@ -280,12 +206,12 @@ button:disabled {
 <button onclick="register()" id="registerButton" disabled>Criar conta</button>
 
 <p id="message"></p>
+</div>
+</div>
 
 <footer>
   <div class="brand">&copy;2024°-Publicadores - todos os direitos reservados.</div>
 </footer>
-
-
 
 
 
