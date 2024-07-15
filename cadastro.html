@@ -38,18 +38,6 @@
 
 }
 
-  .nome {
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-  }
-   
-    senha {
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
   .text {
     color: black;
     font-size: 20px;
@@ -70,32 +58,48 @@
 
  }
 
-  .cadastrar, .senha {
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 30px;
-  }
-
-  input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1.5px solid #ccc;
-    margin: 10px;
-   display: flex;
-
- }
-
-  button {
-    background: orange;
-    border-radius: 10px;
-    border: 1px solid orange;
-    padding: 10px; 
-    margin-top: 10px;
-    font-weight: bold;
+  div.nome {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: bold;
+  margin-left: 16px;
 
 }
 
+  input[type="email"], input[type="password"] {
+  width: 80%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+  outline: none;
+  margin-left: 15px;
+  margin-right: 0px;
+
+  }
+
+
+ button {
+  width: 30%;
+  padding: 0.75rem;
+  background-color: orange;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 30%;
+
+}
+
+button:hover {
+  background-color: #0056b3;
+}
 </style>  
   
   
@@ -104,16 +108,17 @@
   <header>
     <div class="text">Criar senha de acesso</div>
   </header>
- 
+</div>
+</div>
   
 <div class="title">Lembre-se dessa senha, pois ela será usada para que você possa acessar sua página de administrador. Se você esquecer dela, não será possível recuperá-la.</div>
   </div>
 </div>
   
-<div class="container">
+
 <div class="nome">Nome ou E-mail</div>
   <input type="email" id="email" placeholder="Digite um nome ou email">
-<div class="senha">Senha</div>
+<div class="nome">Senha</div>
   <input type="password" id="newPassword" placeholder="Digite uma senha">
  <button onclick="register()">Cadastrar</button>
 
