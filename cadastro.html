@@ -126,6 +126,38 @@ button:hover {
   margin-right: 0px;
 }
 
+
+
+#notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 5px;
+            right: 0px;
+            padding: 15px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 300px;
+            width: 100%;
+        }
+        #notification.error {
+            background-color: #f44336;
+        }
+        #closeNotification {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        #notificationMessage {
+            margin-top: 30px;
+            text-align: center;
+        }
+
  footer {
  background-color: #555;
  padding: 14.50px;
@@ -152,11 +184,10 @@ button:hover {
 </div>
 </div>
   
-<div class="title">Lembre-se dessa senha, pois ela será usada para que você possa acessar sua conta de administrador.
-  Se você esquecer dela, não será possível recuperá-la.</div>
-</div>
-</div>
-  
+    <div id="notification">
+        <span id="closeNotification">X</span>
+        <span id="notificationMessage">Mensagem de notificação automática!</span>
+    </div>
 
 <div class="nome">Nome ou E-mail</div>
   <input type="email" id="email" placeholder="Digite um nome ou email">
@@ -182,10 +213,7 @@ button:hover {
 </div>
 
 
-
-
-  
-       <script>
+      <script>
         function register() {
             var emailInput = document.getElementById("email");
             var newPasswordInput = document.getElementById("newPassword");
@@ -233,5 +261,40 @@ button:hover {
             }
         }
     </script>
+
+
+
+  
+<script>
+        // Função para exibir a notificação
+        function showNotification(message, isError) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            notificationMessage.textContent = message;
+            if (isError) {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+
+            notification.style.display = 'block';
+        }
+
+        // Função para fechar a notificação
+        function closeNotification() {
+            document.getElementById('notification').style.display = 'none';
+        }
+
+        // Adiciona um listener para o botão de fechar a notificação
+        document.getElementById('closeNotification').addEventListener('click', closeNotification);
+
+        // Exibe a notificação automaticamente quando a página carregar
+        window.onload = function() {
+            showNotification('Ao criar sua conta, Lembre-se da senha e do usuário, pois ela será usada para que você possa acessar sua conta de administrador. Se você esquecer dela, não será possível recuperá-la.', false);
+        }
+    </script>
 </body>
 </html>
+
+
