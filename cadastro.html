@@ -90,6 +90,7 @@ margin-bottom: 135px;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  margin-left: 15px;
 }
 
 .terms-container input[type="checkbox"] {
@@ -105,11 +106,16 @@ margin-bottom: 135px;
   text-decoration: underline;
 }
 
+
+
+
+
+   
 /* Estilos do botão */
 button {
   width: 30%;
   padding: 0.75rem;
-  background-color: #007BFF;
+  background-color: #0056b3;
   border: none;
   border-radius: 5px;
   color: white;
@@ -131,7 +137,42 @@ button:disabled {
 
 
 
-
+#notification {
+ display: none;
+ position: fixed;
+ top: 120px;
+ left: 5px;
+ right: 0px;
+ padding: 15px 25px;
+ background-color: #4CAF50;
+ color: white;
+ border-radius: 5px;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+ z-index: 1000;
+ max-width: 300px;
+ width: 100%;
+       
+ }
+       
+ #notification.error {
+ background-color: #f44336;
+       
+ }
+       
+ #closeNotification {
+ position: absolute;
+ top: 5px;
+ right: 5px;
+ cursor: pointer;
+ font-size: 18px;
+       
+ }
+    
+ #notificationMessage {
+ margin-top: 30px;
+ text-align: center;
+        
+ }
 
 
 
@@ -141,27 +182,7 @@ button:disabled {
 
 
    
-/* Estilos da notificação */
-#notification {
-  display: none;
-  background-color: #4CAF50;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 1rem;
-  position: fixed;
-  top: 5rem;
-  right: 1rem;
-  width: 300px;
-}
 
-#notification.error {
-  border-color: #ff0000;
-}
-
-#closeNotification {
-  float: right;
-  cursor: pointer;
-}
 
 #notificationMessage {
   display: block;
