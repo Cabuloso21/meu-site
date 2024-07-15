@@ -64,47 +64,7 @@ margin-bottom: 135px;
   }
 
 
- button {
-  width: 30%;
-  padding: 0.75rem;
-  background-color: #ccc;
-  border: none;
-  border-radius: 5px;
-  color: black;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-left: 30%;
-
-}
-
-button:hover {
-  background-color: #ccc;
-}
-
-
-/* Estilos da caixa de termos */
-.terms-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  margin-left: 15px;
-}
-
-.terms-container input[type="checkbox"] {
-  margin-right: 0.5rem;
-}
-
- .terms-container a {
-  color: #007BFF;
-  text-decoration: none;
-}
-
-.terms-container a:hover {
-  text-decoration: underline;
-}
- 
+   
   p {
   font-size: 16px;
   margin-bottom: 0.5rem;
@@ -116,36 +76,90 @@ button:hover {
 
 
 
-#notification {
-            display: none;
-            position: fixed;
-            top: 120px;
-            left: 5px;
-            right: 0px;
-            padding: 15px 25px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 300px;
-            width: 100%;
-        }
-        #notification.error {
-            background-color: #f44336;
-        }
-        #closeNotification {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        #notificationMessage {
-            margin-top: 30px;
-            text-align: center;
-        }
 
+
+
+
+   
+
+
+
+
+/* Estilos da caixa de termos */
+.terms-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.terms-container input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.terms-container a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.terms-container a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos do botão */
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Estilos da notificação */
+#notification {
+  display: none;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 300px;
+}
+
+#notification.error {
+  border-color: #ff0000;
+}
+
+#closeNotification {
+  float: right;
+  cursor: pointer;
+}
+
+#notificationMessage {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+
+
+
+
+
+   
  footer {
  background-color: #555;
  padding: 14.50px;
@@ -172,139 +186,196 @@ button:hover {
 </div>
 </div>
   
-    <div id="notification">
-        <span id="closeNotification">X</span>
-        <span id="notificationMessage">Mensagem de notificação automática!</span>
-    </div>
+    /* Estilos da caixa de termos */
+.terms-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.terms-container input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.terms-container a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.terms-container a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos do botão */
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Estilos da notificação */
+#notification {
+  display: none;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 300px;
+}
+
+#notification.error {
+  border-color: #ff0000;
+}
+
+#closeNotification {
+  float: right;
+  cursor: pointer;
+}
+
+#notificationMessage {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+</style>
+
+
+
+<div class="text">Cadastre-se</div>
+
+<div id="notification">
+  <span id="closeNotification">X</span>
+  <span id="notificationMessage">Mensagem de notificação automática!</span>
+</div>
 
 <div class="nome">Nome ou E-mail</div>
-  <input type="email" id="email" placeholder="Digite um nome ou email">
+<input type="email" id="email" placeholder="Digite um nome ou email">
+
 <div class="nome">Senha</div>
-  <input type="password" id="newPassword" placeholder="Digite uma senha">
+<input type="password" id="newPassword" placeholder="Digite uma senha">
 
-  <div class="terms-container">
-    <input type="checkbox" id="terms" name="terms">
-    <label for="terms">Eu aceito os <a href="#" target="_blank">termos de uso.</a></label>
-  </div>
-  <button onclick="register()">Cadastrar</button>
-
-  <p id="message"></p>
-
+<div class="terms-container">
+  <input type="checkbox" id="terms" name="terms">
+  <label for="terms">Eu aceito os <a href="#" target="_blank">termos de uso.</a></label>
 </div>
-</div>
+
+<button onclick="register()" id="registerButton" disabled>Criar conta</button>
+
+<p id="message"></p>
 
 <footer>
   <div class="brand">&copy;2024°-Publicadores - todos os direitos reservados.</div>
-  </div>
 </footer>
-</div>
-</div>
-
-
-      <script>
-        function register() {
-            var emailInput = document.getElementById("email");
-            var newPasswordInput = document.getElementById("newPassword");
-            var message = document.getElementById("message");
-
-            var email = emailInput.value;
-            var newPassword = newPasswordInput.value;
-
-            if (localStorage.getItem("emailRegistered")) {
-                message.textContent = "Um usuário já foi cadastrado neste dispositivo.";
-                return;
-            }
-
-            if (email && newPassword) {
-                var users = JSON.parse(localStorage.getItem("users")) || {};
-
-                if (users[email]) {
-                    message.textContent = "dispositivo já cadastrado.";
-                } else {
-                    users[email] = newPassword;
-                    localStorage.setItem("users", JSON.stringify(users));
-                    localStorage.setItem("emailRegistered", true); // Marcar que um email foi cadastrado
-                    message.textContent = "Email e senha cadastrados com sucesso.";
-
-                    // Limpar campos de input
-                    emailInput.value = "";
-                    newPasswordInput.value = "";
-
-                    // Armazenar dados permanentemente no localStorage
-                    localStorage.setItem("cadastroEmail", email);
-                    localStorage.setItem("cadastroSenha", newPassword);
-
-                    // Exibir mensagem de confirmação com link para a página de login
-                    var confirmacaoMessage = document.createElement("p");
-                    confirmacaoMessage.textContent = "Cadastro realizado com sucesso! Clique ";
-                    var loginLink = document.createElement("a");
-                    loginLink.href = "login.html";
-                    loginLink.textContent = "aqui";
-                    confirmacaoMessage.appendChild(loginLink);
-                    confirmacaoMessage.innerHTML += " para fazer login.";
-                    document.body.appendChild(confirmacaoMessage);
-                }
-            } else {
-                message.textContent = "O email e a senha não podem estar em branco.";
-            }
-        }
-    </script>
-
-
-
-  
-<script>
-        // Função para exibir a notificação
-        function showNotification(message, isError) {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notificationMessage');
-            
-            notificationMessage.textContent = message;
-            if (isError) {
-                notification.classList.add('error');
-            } else {
-                notification.classList.remove('error');
-            }
-
-            notification.style.display = 'block';
-        }
-
-        // Função para fechar a notificação
-        function closeNotification() {
-            document.getElementById('notification').style.display = 'none';
-        }
-
-        // Adiciona um listener para o botão de fechar a notificação
-        document.getElementById('closeNotification').addEventListener('click', closeNotification);
-
-        // Exibe a notificação automaticamente quando a página carregar
-        window.onload = function() {
-            showNotification('Importante: Ao criar sua conta, Lembre-se da senha e do usuário, pois ela será usada para que você possa acessar sua conta de administrador. Se você esquecer dela, não será possível recuperá-la.', false);
-        }
-    </script>
 
 
 
 
 
 <script>
+
 document.getElementById('terms').addEventListener('change', function() {
-  document.getElementById('loginButton').disabled = !this.checked;
+  document.getElementById('registerButton').disabled = !this.checked;
 });
 
-function login() {
+function register() {
+  var emailInput = document.getElementById("email");
+  var newPasswordInput = document.getElementById("newPassword");
+  var message = document.getElementById("message");
+
+  var email = emailInput.value;
+  var newPassword = newPasswordInput.value;
+
   if (!document.getElementById('terms').checked) {
-    alert('Você deve aceitar os termos de uso antes de fazer login.');
-    return false;
+    alert('Você deve aceitar os termos de uso antes de se cadastrar.');
+    return;
   }
 
-  // Continue com o processo de login
-  alert('Login bem-sucedido!');
+  if (localStorage.getItem("emailRegistered")) {
+    message.textContent = "Um usuário já foi cadastrado neste dispositivo.";
+    return;
+  }
+
+  if (email && newPassword) {
+    var users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (users[email]) {
+      message.textContent = "Dispositivo já cadastrado.";
+    } else {
+      users[email] = newPassword;
+      localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("emailRegistered", true); // Marcar que um email foi cadastrado
+      message.textContent = "Email e senha cadastrados com sucesso.";
+
+      // Limpar campos de input
+      emailInput.value = "";
+      newPasswordInput.value = "";
+
+      // Armazenar dados permanentemente no localStorage
+      localStorage.setItem("cadastroEmail", email);
+      localStorage.setItem("cadastroSenha", newPassword);
+
+      // Exibir mensagem de confirmação com link para a página de login
+      var confirmacaoMessage = document.createElement("p");
+      confirmacaoMessage.textContent = "Cadastro realizado com sucesso! Clique ";
+      var loginLink = document.createElement("a");
+      loginLink.href = "login.html";
+      loginLink.textContent = "aqui";
+      confirmacaoMessage.appendChild(loginLink);
+      confirmacaoMessage.innerHTML += " para fazer login.";
+      document.body.appendChild(confirmacaoMessage);
+    }
+  } else {
+    message.textContent = "O email e a senha não podem estar em branco.";
+  }
+}
+
+// Função para exibir a notificação
+function showNotification(message, isError) {
+  const notification = document.getElementById('notification');
+  const notificationMessage = document.getElementById('notificationMessage');
+
+  notificationMessage.textContent = message;
+  if (isError) {
+    notification.classList.add('error');
+  } else {
+    notification.classList.remove('error');
+  }
+
+  notification.style.display = 'block';
+}
+
+// Função para fechar a notificação
+function closeNotification() {
+  document.getElementById('notification').style.display = 'none';
+}
+
+// Adiciona um listener para o botão de fechar a notificação
+document.getElementById('closeNotification').addEventListener('click', closeNotification);
+
+// Exibe a notificação automaticamente quando a página carregar
+window.onload = function() {
+  showNotification('Importante: Ao criar sua conta, lembre-se da senha e do usuário, pois ela será usada para que você possa acessar sua conta de administrador. Se você esquecer dela, não será possível recuperá-la.', false);
 }
 </script>
 
 
-</body>
-</html>
-
-
+            
+            
