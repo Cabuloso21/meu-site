@@ -348,9 +348,9 @@
         const categoryData = {
           id: generateUniqueId(),
           name: categoryName,
-          nome: "",
-          publicacões: "",
           conversa: "",
+          texto: "",
+          publicacões: "",
           proximoEstudo: "",
           dia: "",
           horario: "",
@@ -380,20 +380,20 @@
         <input type="number" placeholder="Número do WhatsApp" value="${categoryData.phoneNumber}" oninput="saveCategoriesPhoneNumber(this)">
         <!-- Resto do seu código HTML aqui -->
         <div>
-          <label for="nome">Nome:</label>
-          <input type="name" id="nome" value="${categoryData.nome}" oninput="updateCategoryField('${categoryData.id}', 'nome', this.value)">
+         <label for="conversa">Primeira conversa:</label>
+         <input type="name" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
         </div>
         <div>
-          <label for="publicacões">Publicações:</label>
-          <input type="name" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
+         <label for="texto">Texto da bíblia:</label>
+         <input type="name" id="texto" value="${categoryData.texto}" oninput="updateCategoryField('${categoryData.id}', 'texto', this.value)">
         </div>
         <div>
-          <label for="conversa">Primeira conversa:</label>
-          <input type="name" id="conversa" value="${categoryData.conversa}" oninput="updateCategoryField('${categoryData.id}', 'conversa', this.value)">
-        </div>
+         <label for="publicacões">Publicações:</label>
+         <input type="name" id="publicacões" value="${categoryData.publicacões}" oninput="updateCategoryField('${categoryData.id}', 'publicacões', this.value)">
+       </div>
         <div>
-          <label for="proximoEstudo">Proxima conversa:</label>
-          <input type="name" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
+         <label for="proximoEstudo">Proxima conversa:</label>
+         <input type="name" id="proximoEstudo" value="${categoryData.proximoEstudo}" oninput="updateCategoryField('${categoryData.id}', 'proximoEstudo', this.value)">
         </div>
         <div>
           <label for="dia">Dia:</label>
@@ -465,9 +465,9 @@
         id: category.id,
         name: category.querySelector('h3').textContent,
         phoneNumber: category.querySelector('input[type="number"]').value,
-        nome: category.querySelector('#nome').value,
-        publicacões: category.querySelector('#publicacões').value,
         conversa: category.querySelector('#conversa').value,
+        texto: category.querySelector('#texto').value,
+        publicacões: category.querySelector('#publicacões').value,
         proximoEstudo: category.querySelector('#proximoEstudo').value,
         dia: category.querySelector('#dia').value,
         horario: category.querySelector('#horario').value,
@@ -563,3 +563,4 @@
   </script>
 </body>
 </html>
+
