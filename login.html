@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  
-    
+      
  <style>
-  
  body {
  margin: 0;
  font-family: Arial, sans-serif
@@ -16,15 +14,15 @@
 }
 
  header {
- background: orange;
- padding: 20px; 
- 
+ background: #cc1;
+ padding: 15px; 
+ border-bottom: 1px solid none;
  }
 
  
  .logo {
- color: navy;
- font-size: 24px;
+ color: black;
+ font-size: 20px;
  font-weight: bold;
  text-align: absolute;
 
@@ -36,9 +34,66 @@
  font-weight: bold;
  margin-top: 30px;
  text-align: center;
- margin-bottom: 30px;
+ margin-bottom: 20px;
 
 }
+
+.card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 83%;
+  text-align: center;
+  margin-left: 10px;
+  margin-top: 0px;
+  border: 1px solid #ccc;
+}
+
+.card .nome {
+  margin: 5px;
+  text-align: left;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+ .card input[type="email"],
+ .card input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 0px;
+}
+
+.card .terms-container {
+  text-align: left;
+  margin: 10px 0;
+  color: #333;
+  font-size: 15px;
+}
+
+.card button {
+  background-color: #0056b3;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
 
 
 .form-container {
@@ -59,42 +114,9 @@ div.nome {
   margin-left: 16px;
 
 }
-
-
-
    
-  input[type="email"], input[type="password"] {
-  width: 80%;
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-size: 15px;
-  outline: none;
-  margin-left: 15px;
-  margin-right: 0px;
-
-  }
-
-
- button {
-  width: 30%;
-  padding: 0.75rem;
-  background-color: orange;
-  border: none;
-  border-radius: 5px;
-  color: black;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-left: 30%;
-
-}
-
-button:hover {
-  background-color: #0056b3;
+ button:hover {
+ background-color: #0056b3;
 }
 
 p {
@@ -107,25 +129,21 @@ p {
 }
 
 footer {
- background-color: #555;
- padding: 14.50px;
- margin-top: 50%;
- border-bottom: 1px solid white; 
-        
- }
-  
+ margin-top: 95px;
+ text-align: center;
+}
+
  .brand {
- font-size: 14px;
- color: silver;
- text-align: absolute;
- margin-left: 1px;
-   
+ color: #777;
+ font-size: 12px;
+}
+
 </style>
 </head>
 <body>
   
  <header>
- <div class="logo">Publication</div>
+ <div class="logo">Publicador</div>
  </header>
  </div>
  </div>
@@ -134,24 +152,24 @@ footer {
  </div>
  </div> 
  
- 
+ <div class="card">
  <div class="nome">Usuário</div>
-   <input type="email" id="email" placeholder="Digite seu nome ou email">
-<div class="nome">Senha</div>
-   <input type="password" id="password" placeholder="Digite sua senha">
-   <button onclick="login()">Entrar</button>
+ <input type="email" id="email" placeholder="Digite seu nome ou email">
+ <div class="nome">Senha</div>
+ <input type="password" id="password" placeholder="Digite sua senha">
+ <button onclick="login()">Entrar</button>
 
  <p id="message"></p>
-</div>
-</div>
+ </div>
+ </div>
 
 <footer>
-  <div class="brand">&copy;2024°-Publicadores - todos os direitos reservados.</div>
-  </div>
+<div class="brand">&copy;2024°-Publicador - todos os direitos reservados.</div>
+</div>
 </footer>
 </div>
 </div>
-  
+
     <script>
         function login() {
             var emailInput = document.getElementById("email");
