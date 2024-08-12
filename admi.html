@@ -161,12 +161,13 @@
 }
   
 </style>
-
 <div class="header-menu-container">
 <header>
 <input type="file" id="imagemInput" accept="image/*" style="display: none;">
 <img id="logo" src="" alt="foto" onclick="selecionarImagem()">
-<h1 id="headerText" onclick="habilitarEdicao()" contenteditable="true">Digite seu nome</h1>
+<h1 id="headerText" onclick="habilitarEdicao()" contenteditable="true" onkeydown="preventLineBreak(event)">Digite seu nome</h1>
+</header>
+</div>
 
  <div class="menu-container">
  <button id="toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
@@ -206,67 +207,74 @@
 </div>
 </div>
 
-
 <script defer src="caminho.js"></script>
-
 <script>
-function redirecionar(url) {
- window.location.href = url;
-}
+    function redirecionar(url) {
+        window.location.href = url;
+    }
 
+    // Função para habilitar a edição do cabeçalho
+    function habilitarEdicao() {
+        var header = document.getElementById("headerText");
+        header.focus();
+    }
 
-  // Função para habilitar a edição do cabeçalho
-        function habilitarEdicao() {
-            var header = document.getElementById("headerText");
-            header.focus();
-        }
+    // Função para selecionar e exibir uma imagem
+    function selecionarImagem() {
+        var imagemInput = document.getElementById("imagemInput");
+        imagemInput.click();
 
-  
-   // Função para selecionar e exibir uma imagem
-        function selecionarImagem() {
-            var imagemInput = document.getElementById("imagemInput");
-            imagemInput.click();
-
-            imagemInput.addEventListener("change", function () {
-                var logo = document.getElementById("logo");
-                var file = imagemInput.files[0];
-                var reader = new FileReader();
-
-                reader.onload = function () {
-                    logo.src = reader.result;
-                    // Salvar a imagem no armazenamento local
-                    localStorage.setItem("imagem", reader.result);
-                };
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        // Carregar imagem do armazenamento local ao carregar a página
-        var imagemSalva = localStorage.getItem("imagem");
-        if (imagemSalva) {
+        imagemInput.addEventListener("change", function () {
             var logo = document.getElementById("logo");
-            logo.src = imagemSalva;
-        }
-  
-  
-        // Restante do seu código JavaScript para salvar edições automaticamente
-        var headerText = document.getElementById("headerText");
+            var file = imagemInput.files[0];
+            var reader = new FileReader();
 
-        headerText.addEventListener("input", function () {
-            // Salvar o texto do cabeçalho no armazenamento local
-            localStorage.setItem("cabecalho", headerText.textContent);
+            reader.onload = function () {
+                logo.src = reader.result;
+                // Salvar a imagem no armazenamento local
+                localStorage.setItem("imagem", reader.result);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         });
+    }
 
-        // Carregar texto do cabeçalho do armazenamento local ao carregar a página
-        var cabecalhoSalvo = localStorage.getItem("cabecalho");
-        if (cabecalhoSalvo) {
-            headerText.textContent = cabecalhoSalvo;
+    // Carregar imagem do armazenamento local ao carregar a página
+    var imagemSalva = localStorage.getItem("imagem");
+    if (imagemSalva) {
+        var logo = document.getElementById("logo");
+        logo.src = imagemSalva;
+    }
+
+    // Prevenir quebra de linha e limitar overflow
+    function preventOverflow(element) {
+        element.style.whiteSpace = "nowrap";
+        element.style.overflow = "hidden";
+        element.style.textOverflow = "ellipsis";
+    }
+
+    function preventLineBreak(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
         }
-    
-    
+    }
+
+    // Aplicar a função de prevenir overflow no h1 do cabeçalho
+    var headerText = document.getElementById("headerText");
+    preventOverflow(headerText);
+
+    headerText.addEventListener("input", function () {
+        // Salvar o texto do cabeçalho no armazenamento local
+        localStorage.setItem("cabecalho", headerText.textContent);
+    });
+
+    // Carregar texto do cabeçalho do armazenamento local ao carregar a página
+    var cabecalhoSalvo = localStorage.getItem("cabecalho");
+    if (cabecalhoSalvo) {
+        headerText.textContent = cabecalhoSalvo;
+    }
 </script>
 
 
