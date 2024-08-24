@@ -29,13 +29,15 @@
    
  .text {
  color:  black;
- font-size: 20px;
+ font-size: 17px;
  font-weight: none;
  text-align: center;
  margin-top: 30px;
- margin-bottom: 30px;
- margin-left: 20px;
- margin-right: 20px;
+ margin-bottom: 0px;
+ margin-left: 10px;
+ margin-right: 10px;
+ line-height: 1.5;
+
 } 
 
 .vesiculo {
@@ -43,18 +45,18 @@
  font-size: 15px;
  font-weight: bold;
  text-align: center;
- margin-top: 30px;
+ margin-top: 15px;
  margin-bottom: 30px;
  margin-left: 20px;
  margin-right: 20px;
 } 
-
-
  
  h1 {
  flex: 1;
- color: white;
+ color:  #134;
  font-size: 24px;
+ outline: none;
+
 }
 
  menu-container {
@@ -68,7 +70,7 @@
  font-size: 25px;
  margin-left: 10px;
  font-weight: bold; 
-   
+ 
  }
 
  #toggle-btn {
@@ -168,17 +170,17 @@
  font-size: 16px;
  text-align: center;
  font-weight: bold;
- color: black;
+ color: #134;
  margin-top: 15px;
   
 }
   
 </style>
-<div class="header-menu-container">
-<header>
-<input type="file" id="imagemInput" accept="image/*" style="display: none;">
-<img id="logo" src="" alt="foto" onclick="selecionarImagem()">
-<h1 id="headerText" onclick="habilitarEdicao()" contenteditable="true" onkeydown="preventLineBreak(event)">Digite seu nome</h1>
+ <div class="header-menu-container">
+ <header>
+ <input type="file" id="imagemInput" accept="image/*" style="display: none;">
+ <img id="logo" src="" alt="foto" onclick="selecionarImagem()">
+ <h1 id="headerText" onclick="habilitarEdicao()" contenteditable="true" onkeydown="preventLineBreak(event)">Digite seu nome</h1>
 
  <div class="menu-container">
  <button id="toggle-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
@@ -193,31 +195,30 @@
  <div class="text">Portanto, vão e façam discípulos de pessoas de todas as nações, batizando-as em nome do Pai, e do Filho, e do espírito santo.</div>
  <div class="vesiculo">Mateus 28:19</div>
 
-<div class="card" onclick="redirecionar('estudante.html')">
-<div class="name">Estudantes</div>
-</div>
+ <div class="card" onclick="redirecionar('estudante.html')">
+ <div class="name">Estudantes</div>
+ </div>
 
-<div class="card" onclick="redirecionar('revisitas.html')">
-<div class="name">Revisitas</div>
-</div>
+ <div class="card" onclick="redirecionar('revisitas.html')">
+ <div class="name">Revisitas</div>
+ </div>
 
-<div class= "card" onclick="redirecionar('relatório.html')">
-<div class="name">Meu relatório</div>
-</div>
+ <div class= "card" onclick="redirecionar('relatório.html')">
+ <div class="name">Relatório</div>
+ </div>
 
-<div class="card" onclick="redirecionar('designação.html')">
-<div class="name">Designação</div>
-</div>
+ <div class="card" onclick="redirecionar('designação.html')">
+ <div class="name">Designação</div>
+ </div>
 
-<div class="card" onclick="redirecionar('pregação.html')">
-<div class="name">Pregação</div>
-</div>
+ <div class="card" onclick="redirecionar('pregação.html')">
+ <div class="name">Pregação</div>
+ </div>
 
-
-<div class= "card" onclick="redirecionar('limpeza.html')">
-<div class="name">Limpeza</div>
-</div>
-</div>
+ <div class= "card" onclick="redirecionar('limpeza.html')">
+ <div class="name">Limpeza</div>
+ </div>
+ </div>
 
 <script defer src="caminho.js"></script>
 <script>
