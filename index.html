@@ -18,8 +18,8 @@
   
 
  header {
- background-color: orange;
- padding: 20px;
+ background: goldenrod;
+ padding: 15px;
  display: flex;
  justify-content: space-between;
  align-items: center;
@@ -30,7 +30,7 @@
  .logo {
  font-size: 23px;
  font-weight: bold;
- color: black;
+ color: #555;
  font-style: italic;
  }
         
@@ -55,25 +55,35 @@
  }
         
  li a {
- color: black;
+ color: #333;
  text-decoration: none;
- font-size: 16px;
+ font-size: 15px;
  font-weight: bold;
- background: orange;
+ background: none;
  border-none;
  border-radius: 10px;
  margin-left: 20px;
-            
+          
  }
 
-
-
-
-.title {
- color: orange;
+ .title {
+ color: black;
  font-size: 30px;
  font-weight: bold;
  margin-top: 30px;
+ text-align: center;
+ background: white;
+ margin-left: 20px;
+ margin-right: 20px;
+ margin-bottom: 0px;
+ 
+ }
+  
+ .subtitle {
+ color: black;
+ font-size: 18px;
+ font-weight: none;
+ margin-top: 15px;
  text-align: center;
  background: none;
  margin-left: 20px;
@@ -81,78 +91,85 @@
  margin-bottom: 30px;
  
  }
-  
- .subt {
+ 
+ .text {
  color: black;
  font-size: 20px;
  font-weight: bold;
- margin-top: 10px;
+ margin-top: 40px;
  text-align: center;
- margin: 20px;
- margin-bottom: 40px;
-
+ margin-bottom: 20px;
+ margin-left: 20px;
+ margin-right: 20px;
  }
   
- 
-
  .list {
  align-items: center;
  justify-content: center;
  text-align: center;
  margin: 0 auto;
- padding: 30px;
+ margin-top: 50px;
  background: white; 
  
  }
 
-
-.line {
+ .line {
  align-items: center;
  justify-content: center;
  text-align: center;
- border-bottom: 1.50px solid orange;
+ border-bottom: 1.50px solid #ccc;
  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
  margin-left: 10%;
  margin-right: 10%;
-
+ margin-top: 10px;
  }
 
+ .descri {
+ color: black;
+ font-size: 15.55px; 
+ text-align: center; 
+ margin-top: 10px;
+ margin-left: 50px;
+ margin-right: 50px; 
+ 
+}
+  
  .card {
  flex-direction: column;
  align-items: center;
  justify-content: center;
  text-align: center;
  margin: 0 auto;
- padding: 30px;
+ padding: 15px;
  width: 260px;
- height: 100px;
+ height: 90px;
  background: white; 
- border: 1px solid orange;
+ border: 1px solid #ccc;
  border-radius: 15px;
  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
  margin-bottom: 20px;
   
  }
 
- .text {
+ .name {
  font-size: 17px;
  text-align: absolute;
  font-weight: bold;
- color: black;
+ color: #444;
           
  } 
           
- .descri {
+ .sub {
  color: black;
  font-size: 15.55px; 
  text-align: center; 
- margin-top: 0px;
- padding: 12px; 
-   
- }
-  
-  
- .titulo {
+ margin-top: 10px;
+ margin-left: 0px;
+ margin-right: 0px; 
+ 
+}
+
+.titulo {
  color: black;
  font-size: 19px;
  font-weight: bold;
@@ -160,122 +177,107 @@
  margin-top: 80px;
  margin-bottom: 20px;
  padding: 10px; 
+
  }     
   
-  
-  
-  
- 
+ .custom-icon {
+ width: 30px; /* Aumenta o tamanho do ícone */
+ height: 30px;
+ fill: #555;
+ transition: fill 0.3s ease, transform 0.3s ease; /* Adiciona uma transição suave */
         
-  
-        
-        
-        
-  
-  
-  footer {
- background-color:  #333;
- padding: 10px;
+}
+
+ footer {
+ background-color: #777;
+ padding: 2px;
  margin-top: 100px;
 }
   
-
- h4 {
- margin-top: 18px;
- font-size: 16px;
- color: #cc1;
-}
-  
  p {  
- margin-top: 10px;
+
  font-size: 15px;
  color: white;
 }
   
  .brand p {
- font-size: 15px;
+ font-size: 14px;
  color: white;
- margin-top: 50px;
  text-align: center;
 }
   
- </style>
-  
+</style>
 </head>
 <body>
   
- 
-<header>
- <div class="logo">Publicadores</div>
+ <header>
+ <svg class="custom-icon custom-icon-shadow" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 24 24"><path d="M12.5 17.52c1.415-1.054 3.624-1.846 5.5-2v6.479c-1.739.263-3.755 1.104-5.5 2v-6.479zm-1 0c-1.415-1.054-3.624-1.846-5.5-2v6.479c1.739.263 3.755 1.104 5.5 2v-6.479zm-6.5 2.917c-2.049-.674-2.996-1.437-2.996-1.437l-.004-2.025c-.008-2.127.088-3.344 2.648-3.909 2.805-.619 5.799-1.317 4.241-3.521-3.901-5.523-.809-9.545 3.111-9.545 3.921 0 6.996 3.991 3.11 9.545-1.529 2.185 1.376 2.888 4.242 3.521 2.57.568 2.657 1.791 2.647 3.934l-.003 2s-.947.763-2.996 1.437v-6.003l-1.082.089c-2.054.169-4.36 1.002-5.918 2.128-1.559-1.126-3.863-1.959-5.918-2.128l-1.082-.089v6.003z"/></svg>
+ <div class="logo">Publicador</div>
 
  <nav>
  <ul> 
  <li><a href="cadastro.html">Criar conta</a></li>
- <li><a href="login.html">Login</a></li>
+ <li><a href="login.html">Entrar</a></li>
  </ul>
  </nav>
  </header>
  </div>
  </div>
 
- <div class="title">Organize sua vida de publicador, 
-  tenha na palma da sua mão a plataforma completa
-  que vai ti ajudar a organizar sua rotina espiritual</div>
- </div>
- </div>
- 
-
- <div class="card">
- <div class="text">Relate seus estudos</div>
- <div class="descri">Com apenas um click no botão, você envia seus relatorio direto num whatzapp do seu respondavel. </div>
- </div>
-
- <div class="card">
- <div class="text">Designação</div>
- <div class="descri">Você pode salvar suas designações, como leitura da biblia e muito mais, basta apenas copiar e colar.</div>
- </div>
-
- <div class="card">
- <div class="text">Saida de pregação</div>
- <div class="descri">Evite perder de sair no campo, Organize sua rotina de pregação, dias e horarios.</div>
- </div>
- </div>
-
- <div class="subt">Faça mais com nossa plataforma</div>
+ <div class="title">Organize sua vida de publicador</div>
+ <div class="subtitle">Tenha na palma da sua mão a plataforma completa
+ que vai ti ajudar a organizar sua rotina espiritual.</div> </div>
  </div>
  
  <div class="list">
- <div class="text">Adicione estudantes</div>
+ <div class="name">🤳 Adicione estudantes</div>
  <div class="descri">Você pode adicionar e organizar seus estudantes.</div>
  <div class="line"></div>
  </div>
  
  <div class="list">
- <div class="text">Envie mensagens</div>
- <div class="descri">Converse com seus estudantes pelo whatsapp de forma segura e rapida.</div>
-  <div class="line"></div>
- </div>
- </div>
-
- <div class="subt">Simplifique sua rotina diária</div>
- </div>
- 
- <div class="list">
- <div class="text">Agende Revisitas</div>
+ <div class="name">👥 Agende Revisitas</div>
  <div class="descri">Você pode agendar suas revisitas e visualiza-las guando quizer.</div>
  <div class="line"></div>
  </div>
- 
- <div class="subt">Tudo em um só lugar na palna da sua mão</div>
- </div>
- </div>
-<footer>
-<div class="brand">
-<p>&copy;2024°- Publicadores / todos os direitos reservados.</p>
-</div>
-</footer>
-</div>
-</div>
-</div>
 
-  
+ <div class="list">
+ <div class="name">💬 Envie mensagens</div>
+ <div class="descri">Converse com seus estudantes pelo whatsapp de forma segura e rapida.</div>
+ <div class="line"></div>
+ </div>
+
+ <div class="text">Faça mais com a plataforma</div>
+ </div>
+ 
+ <div class="card">
+ <div class="name">📝 Relate seus estudos</div>
+ <div class="sub">Com apenas um click no botão, você envia seus relatórios e estudos pelo whatzapp.</div>
+ </div>
+
+ <div class="card">
+ <div class="name">📖 Designação</div>
+ <div class="sub">Você pode salvar suas designações, como leitura da biblia e muito mais.</div>
+ </div>
+
+ <div class="text">Simplifique sua rotina diária</div>
+ </div>
+ 
+ <div class="card">
+ <div class="name">🕒 Saida de pregação</div>
+ <div class="sub">Evite perder de sair no campo, Organize sua rotina de pregação, dias e horarios.</div>
+ </div>
+ </div>
+
+ <div class="text">Esse site é de todos os publicadores da organização das testemunhas de Jeová</div>
+ </div>
+ </div>
+ <footer>
+ <div class="brand">
+ <p>&copy;2024°- Publicador - todos os direitos reservados.</p>
+ </div>
+ </footer>
+ </div>
+ </div>
+ </div>
+
