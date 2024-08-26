@@ -265,10 +265,6 @@
  </style>
  </head>
  <body>
-
-
-
- 
  <a href="admi.html">
  <div class="arrow"></div>
  </a>
@@ -293,8 +289,6 @@
  <div class="alert" id="whatsappAlert"></div>
  <div class="alert" id="customAlert">Você não tem nenhuma revisita com esse nome.</div>
 
- 
- 
  <div class="modal" id="addCategoryModal">
  <input type="text" id="categoryNameInput" placeholder="Nome da pessoa">
  <div class="modal-butão">
@@ -374,7 +368,8 @@ function confirmAddCategory() {
             dia: "",
             hora: "",
             endereço: "",
-           };
+            numero: "",
+        };
 
         createCategory(categoryData);
         saveCategories();
@@ -443,7 +438,10 @@ function createCategory(categoryData) {
           <label for="endereço">Endereço:</label>
           <input type="name" class="endereço" value="${categoryData.endereço}" oninput="saveCategories()">
         </div>
-  
+        <div>
+       <label for="numero">Numero da casa:</label>
+         <input type="name" class="numero" value="${categoryData.numero}" oninput="saveCategories()">
+        </div>
      <span class="delete-button" onclick="confirmDeleteCategory('${categoryData.id}')">Excluir</span>
     <button onclick="redirectToWhatsApp(this)">Conversar</button>
     `;
@@ -492,7 +490,9 @@ function saveCategories() {
         dia: category.querySelector('.dia').value || "",
         hora: category.querySelector('.hora').value || "",
         endereço: category.querySelector('.endereço').value || "",
-       }));
+        numero: category.querySelector('.numero').value || "",
+      
+    }));
 
     localStorage.setItem(storageKey, JSON.stringify(categoriesData));
     checkEmptyCategories();
