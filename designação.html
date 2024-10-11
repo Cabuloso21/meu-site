@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
   
@@ -95,7 +94,7 @@
  textarea#notes {
  width: 94%;
  height: 500px;
- font-size: 16px;
+ font-size: 16.60px;
  border: 0px solid #ddd;
  border-radius: 0px;
  resize: vertical;
@@ -207,24 +206,25 @@
  position: center;
  background: white;
  border-radius: 5px;
- margin-bottom: 22px;
- box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+ margin-bottom: 30px;
+ box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
  margin-left: 5px;   
  width: 96.70%; /* Ocupa 100% da largura disponível */
  margin-top: 20px;
- height: 630px; /* Ajuste a altura conforme necessário */
+ height: 650px; /* Ajuste a altura conforme necessário */
     
  }
    
  #categoriesContainer > div h3 {
  font-size: 22px;
- margin-left: 10px;
- margin-right: 10px;
- margin-top: 10px;
+ margin-left: 0px;
+ margin-right: 0px;
+ margin-top: 5px;
+ padding: 10px;
  color: #13294b;
  border-bottom: 1.50px solid #ccc;
  outline: none;
-
+ text-align: center;
  }
 
  .line {
@@ -239,6 +239,8 @@
  font-weight: none;
  margin-left: 0px;
  text-align: center;
+ margin-top: 20px;
+
  }
 </style>
 
@@ -305,6 +307,47 @@
         <button onclick="confirmDelete()">Sim</button>
     </div>
 </div>
+
+
+
+
+
+
+<script>
+  // Carregar informações salvas no localStorage
+ 
+ document.getElementById("tipo").value = localStorage.getItem("tipo") || "";
+  document.getElementById("nome").value = localStorage.getItem("nome") || "";
+  document.getElementById("data").value = localStorage.getItem("data") || "";
+  document.getElementById("texto").value = localStorage.getItem("texto") || "";
+  document.getElementById("ajudante").value = localStorage.getItem("ajudante") || "";
+  
+  // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
+  
+  document.getElementById("tipo").addEventListener("change", function () {
+    localStorage.setItem("tipo", this.value);
+  });
+
+  document.getElementById("nome").addEventListener("input", function () {
+    localStorage.setItem("nome", this.value);
+  });
+
+  document.getElementById("data").addEventListener("input", function () {
+    localStorage.setItem("data", this.value);
+  });
+
+  document.getElementById("texto").addEventListener("input", function () {
+    localStorage.setItem("texto", this.value);
+  });
+
+  document.getElementById("ajudante").addEventListener("input", function () {
+    localStorage.setItem("ajudante", this.value);
+  });
+
+</script>
+
+
+
 
 <script>
     function generateUniqueId() {
@@ -451,41 +494,5 @@
     }
 
 </script>
-
-
- 
-
-<script>
-  // Carregar informações salvas no localStorage
- 
- document.getElementById("tipo").value = localStorage.getItem("tipo") || "";
-  document.getElementById("nome").value = localStorage.getItem("nome") || "";
-  document.getElementById("data").value = localStorage.getItem("data") || "";
-  document.getElementById("texto").value = localStorage.getItem("texto") || "";
-  document.getElementById("ajudante").value = localStorage.getItem("ajudante") || "";
-  
-  // Adicionar ouvinte de eventos para detectar mudanças nos campos de entrada
-  
-  document.getElementById("tipo").addEventListener("change", function () {
-    localStorage.setItem("tipo", this.value);
-  });
-
-  document.getElementById("nome").addEventListener("input", function () {
-    localStorage.setItem("nome", this.value);
-  });
-
-  document.getElementById("data").addEventListener("input", function () {
-    localStorage.setItem("data", this.value);
-  });
-
-  document.getElementById("texto").addEventListener("input", function () {
-    localStorage.setItem("texto", this.value);
-  });
-
-  document.getElementById("ajudante").addEventListener("input", function () {
-    localStorage.setItem("ajudante", this.value);
-  });
-
- </script>
 </body>
 </html>
