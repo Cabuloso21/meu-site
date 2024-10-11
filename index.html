@@ -279,3 +279,57 @@
  </div>
  </div>
 
+<script>
+        // Função para bloquear ferramentas de desenvolvedor
+        document.onkeydown = function(e) {
+            // Desabilitar F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.key === "F12" || 
+                (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || 
+                (e.ctrlKey && e.key === "U")) {
+                e.preventDefault();
+            }
+        };
+
+        // Desabilitar o botão direito do mouse
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        // Impedir acesso ao view-source diretamente
+        if (window.location.href.startsWith("view-source")) {
+            window.close(); // Fecha a aba se o usuário tentar usar view-source
+        }
+
+        // Função para redirecionar o botão para outra página
+        document.getElementById("meuBotao").addEventListener("click", function() {
+            window.location.href = "painel.html";
+        });
+
+        // Função para animações de scroll
+        document.addEventListener('scroll', function() {
+            var liste = document.querySelectorAll('.liste');
+
+            liste.forEach(function(liste) {
+                var listePosition = liste.getBoundingClientRect().top;
+                var screenPosition = window.innerHeight / 1.5;
+
+                if (listePosition < screenPosition) {
+                    liste.classList.add('show-liste');
+                }
+            });
+        });
+
+        // Animação de elementos ao carregar
+        document.addEventListener("DOMContentLoaded", function() {
+            const elements = document.querySelectorAll('.text, .opition, .sub');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('slide-in');
+                }, index * 300);
+            });
+        });
+    </script>
+</body>
+</html>
+ 
+
